@@ -1,0 +1,38 @@
+[
+  {
+    "title": "Accueil",
+    "content": "Bienvenue dans l'application Learning by Doing. Cette mini-application illustre une séquence pédagogique basée sur la théorie du Constructivisme et le concept 'Learning by Doing' appliqué à l'apprentissage de Next.js."
+  },
+  {
+    "title": "Théorie choisie",
+    "content": "Théorie : Constructivisme — Learning by Doing.\n\nL'apprenant construit activement ses connaissances à travers l'action et l'expérimentation. En apprenant à créer une mini-application Next.js, il découvre par lui-même les concepts fondamentaux du framework."
+  },
+  {
+    "title": "Objectif général",
+    "content": "Permettre aux apprenants de comprendre les bases de Next.js (structure, pages, composants, rendu côté serveur) à travers la création d'une mini-application web telle qu'une To-do List ou un mini portfolio."
+  },
+  {
+    "title": "Objectifs intermédiaires",
+    "content": "1️⃣ Identifier le rôle de Next.js dans l'écosystème React.\n2️⃣ Installer et configurer un projet Next.js.\n3️⃣ Créer et afficher une page d'accueil.\n4️⃣ Ajouter une liste dynamique.\n5️⃣ Présenter et expliquer la mini-application créée."
+  },
+  {
+    "title": "Contexte d’enseignement",
+    "content": "Public : étudiants en développement web.\nDurée : 90 minutes.\nOrganisation : travail en binôme.\nOutils : Visual Studio Code, navigateur, terminal.\nApproche : Apprentissage par la pratique (Learning by Doing)."
+  },
+  {
+    "title": "Situation d’apprentissage",
+    "content": "Défi proposé : créer une mini-application web avec Next.js affichant une liste d’éléments modifiables par l’utilisateur.\nLes étudiants explorent la documentation, testent, codent, se trompent et recommencent. L’enseignant joue un rôle de guide et facilitateur."
+  },
+  {
+    "title": "Déroulement de la séance",
+    "content": "1️⃣ Introduction : présentation du défi et de la méthode.\n2️⃣ Mise en pratique : installation et exploration du projet.\n3️⃣ Expérimentation : création de composants.\n4️⃣ Restitution : présentation de la mini-app.\n5️⃣ Bilan : synthèse et feedback collectif."
+  },
+  {
+    "title": "Évaluation",
+    "content": "Évaluation formative : observation durant la pratique.\nÉvaluation sommative : mini-présentation de la mini-app.\nCritères : autonomie, compréhension des concepts, clarté dans l’explication et réflexion personnelle."
+  },
+  {
+    "title": "Conclusion",
+    "content": "À travers cette séance, les apprenants découvrent les bases de Next.js en expérimentant concrètement. Ils développent autonomie, raisonnement et créativité — une application directe du Constructivisme et du concept 'Learning by Doing'."
+  }
+]
