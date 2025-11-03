@@ -1,0 +1,91 @@
+# =========================================
+#  Node & Package Managers
+# =========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-debug.log*
+package-lock.json
+yarn.lock
+
+# =========================================
+#  Build Output
+# =========================================
+dist/
+build/
+.next/
+out/
+.vite/
+.cache/
+
+# =========================================
+#  Environment Files
+# =========================================
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# =========================================
+#  Editors & IDEs
+# =========================================
+.vscode/
+.idea/
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+.DS_Store
+Thumbs.db
+
+# =========================================
+#  TypeScript
+# =========================================
+*.tsbuildinfo
+
+# =========================================
+#  Logs & Temporary Files
+# =========================================
+logs/
+*.log
+*.log.*
+tmp/
+temp/
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# =========================================
+#  Testing & Coverage
+# =========================================
+coverage/
+jest-cache/
+jest-results.json
+
+# =========================================
+#  OS Generated Files
+# =========================================
+ehthumbs.db
+Icon?
+Desktop.ini
+
+# =========================================
+#  Storybook / Sandboxes
+# =========================================
+.storybook-out/
+sandbox/
+stackblitz/
+codesandbox/
+
+# =========================================
+#  Misc
+# =========================================
+*.tgz
+*.zip
+*.tar
+*.tar.gz
