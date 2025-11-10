@@ -1,0 +1,78 @@
+[
+  {
+    "section": "course",
+    "title": "Welcome",
+    "meta": {
+      "duration": "3 min",
+      "difficulty": "Introduction",
+      "tags": ["theory", "overview"]
+    },
+    "content": "# Welcome\nThis learning session introduces **Next.js**, a modern framework based on React, through a **constructivist** approach.\n\n## What you will discover\n- Part 1: a theoretical and contextual introduction on the role of Next.js in modern web development.\n- Part 2: a guided practical activity where you will build a complete **To-Do List application** in Next.js.\n\nThe goal is to learn by building, to experiment with technical concepts while developing a solid understanding through practice."
+  },
+  {
+    "section": "course",
+    "title": "Learning Theory: Constructivism",
+    "meta": {
+      "duration": "5 min",
+      "difficulty": "Introduction",
+      "tags": ["theory", "constructivism"]
+    },
+    "content": "> **Constructivism** considers that learners actively construct their knowledge by experimenting, reflecting, and correcting their errors.\n\n- Error is a **natural step** in the learning process, not a failure.\n- **Understanding emerges from action**: we learn better by doing.\n- **Reflection** and **practice** transform experience into lasting knowledge.\n\nIn this framework, the teacher becomes a **guide** who helps learners construct their own mental models through concrete situations."
+  },
+  {
+    "section": "course",
+    "title": "Overall Session Goal",
+    "meta": {
+      "duration": "2 min",
+      "difficulty": "Introduction"
+    },
+    "content": "Develop a practical and functional understanding of **Next.js** by creating a simple, interactive, and structured application that manages a task list (To-Do List)."
+  },
+  {
+    "section": "course",
+    "title": "Specific Objectives",
+    "meta": {
+      "duration": "3 min",
+      "difficulty": "Introduction"
+    },
+    "content": "- Identify the role and advantages of **Next.js** in the React ecosystem.\n- Create and structure a Next.js application from scratch.\n- Understand **routing**, **component creation**, and **dynamic rendering**.\n- Manage **state** and **user events** to make the application interactive.\n- Collaborate effectively in pairs to solve encountered problems."
+  },
+  {
+    "section": "course",
+    "title": "Teaching Context",
+    "meta": {
+      "duration": "2 min",
+      "difficulty": "Introduction"
+    },
+    "content": "Audience: Web development students (intermediate level).\nTotal duration: 90 minutes.\nMethod: **Learning by doing** and **pair work**.\nRequired tools: Visual Studio Code, web browser, official Next.js documentation, and GitHub for code sharing.\n\nThe work environment promotes autonomy, experimentation, and cooperation."
+  },
+  {
+    "section": "course",
+    "title": "Learning Situation",
+    "meta": {
+      "duration": "3 min",
+      "difficulty": "Introduction"
+    },
+    "content": "Challenge: Create a **To-Do List application** in Next.js.\n\nLearners will need to:\n1. Initialize a Next.js project.\n2. Build reusable components (text input, task list, delete button).\n3. Manage local state with `useState`.\n4. Understand the rendering cycle and dynamic behavior of React/Next.js.\n\nThe instructor adopts a facilitator role: asks guiding questions, encourages reflection, and helps students identify their own errors as learning levers."
+  },
+  {
+    "section": "course",
+    "title": "Pedagogical Phases",
+    "meta": {
+      "duration": "5 min",
+      "difficulty": "Process"
+    },
+    "content": "1. Introduction (10 min)\nObjective: Activate prior knowledge and present the learning framework.\nThe teacher introduces Next.js and explains its role in modern web development. They invite students to share their experiences with React and guide them to identify needs that Next.js can address.\n\n2. Guided Practice (25 min)\nObjective: Build the project foundation together.\nThe teacher demonstrates step-by-step how to initialize a project with the command npx create-next-app. Students reproduce the steps, explore the file structure (pages, components, public, styles) and discover the logic of automatic routing specific to Next.js.\n\n3. Free Experimentation (30 min)\nObjective: Learn through practice and problem-solving.\nLearners work in pairs to develop their To-Do List application. They implement add, delete, and display functions for tasks. The teacher observes, guides, and helps with reflection without providing solutions directly. Error is used as a tool for understanding.\n\n4. Collective Restitution (15 min)\nObjective: Share results and consolidate learning.\nEach group presents their solution, compares approaches, and discusses observed best practices. The teacher highlights essential principles such as using hooks (useState, useEffect), component reuse, and code clarity.\n\n5. Evaluation and Reflection (10 min)\nObjective: Consolidate learning and encourage critical reflection.\nThe teacher facilitates a collective review of difficulties encountered and successes. Learners express what they understood about Next.js functioning and identify skills they wish to strengthen.\nReflection question: Which step of the session helped you most understand Next.js logic, and why?\n\nGeneral Summary: This progression alternates between guidance and autonomy. It promotes active and collaborative learning where understanding emerges from practice, reflection, and sharing experiences."
+  },
+  {
+    "section": "course",
+    "title": "Launch the Practical Workshop",
+    "meta": {
+      "duration": "1 min",
+      "difficulty": "Application"
+    },
+    "content": "You now have a global understanding of the concept and learning framework.\n\n➡️ Go to the **practical workshop** to build step by step your **To-Do List application in Next.js**.\n\nEach development step will allow you to apply theory, experiment, and strengthen your professional skills.",
+    "action": "start-workshop"
+  }
+]
+

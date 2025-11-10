@@ -7,6 +7,7 @@ export default function CodeBlock({ code, language = 'tsx' }: CodeBlockProps) {
   if (!code) return null;
 
   async function copy() {
+    if (!code) return;
     try {
       await navigator.clipboard.writeText(code);
     } catch (_) {

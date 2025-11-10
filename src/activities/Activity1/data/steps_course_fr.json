@@ -1,0 +1,78 @@
+[
+  {
+    "section": "cours",
+    "title": "Bienvenue",
+    "meta": {
+      "durée": "3 min",
+      "niveau": "Introduction",
+      "tags": ["théorie", "aperçu"]
+    },
+    "content": "# Bienvenue\nCette séance d’apprentissage présente **Next.js**, un framework moderne basé sur React, à travers une approche **constructiviste**.\n\n## Ce que vous allez découvrir\n- Partie 1 : une introduction théorique et contextuelle sur le rôle de Next.js dans le développement web moderne.\n- Partie 2 : une activité pratique guidée où vous construirez une **application To-Do List** complète en Next.js.\n\nL’objectif est d’apprendre en construisant, d’expérimenter les concepts techniques tout en développant une compréhension solide par la pratique."
+  },
+  {
+    "section": "cours",
+    "title": "Théorie d’apprentissage : Constructivisme",
+    "meta": {
+      "durée": "5 min",
+      "niveau": "Introduction",
+      "tags": ["théorie", "constructivisme"]
+    },
+    "content": "> Le **constructivisme** considère que l’apprenant construit activement ses connaissances en expérimentant, en réfléchissant et en corrigeant ses erreurs.\n\n- L’erreur est une **étape naturelle** du processus d’apprentissage, pas un échec.\n- La **compréhension émerge de l’action** : on apprend mieux en faisant.\n- La **réflexion** et la **mise en pratique** transforment l’expérience en savoir durable.\n\nDans ce cadre, l’enseignant devient un **guide** qui aide l’apprenant à construire ses propres modèles mentaux à travers des situations concrètes."
+  },
+  {
+    "section": "cours",
+    "title": "Objectif global de la séance",
+    "meta": {
+      "durée": "2 min",
+      "niveau": "Introduction"
+    },
+    "content": "Développer une compréhension pratique et fonctionnelle de **Next.js** en réalisant une application simple, interactive et structurée, permettant de gérer une liste de tâches (To-Do List)."
+  },
+  {
+    "section": "cours",
+    "title": "Objectifs spécifiques",
+    "meta": {
+      "durée": "3 min",
+      "niveau": "Introduction"
+    },
+    "content": "- Identifier le rôle et les avantages de **Next.js** dans l’écosystème React.\n- Créer et structurer une application Next.js à partir de zéro.\n- Comprendre le **routage**, la **création de composants** et le **rendu dynamique**.\n- Gérer les **états** et les **événements utilisateurs** pour rendre l’application interactive.\n- Collaborer efficacement en binôme pour résoudre les problèmes rencontrés."
+  },
+  {
+    "section": "cours",
+    "title": "Contexte d’enseignement",
+    "meta": {
+      "durée": "2 min",
+      "niveau": "Introduction"
+    },
+    "content": "Public : Étudiants en développement web (niveau intermédiaire).\nDurée totale : 90 minutes.\nMéthode : **Apprentissage par la pratique (learning by doing)** et travail en **paires**.\nOutils nécessaires : Visual Studio Code, navigateur web, documentation officielle de Next.js, et GitHub pour le partage de code.\n\nL’environnement de travail favorise l’autonomie, l’expérimentation et la coopération."
+  },
+  {
+    "section": "cours",
+    "title": "Situation d’apprentissage",
+    "meta": {
+      "durée": "3 min",
+      "niveau": "Introduction"
+    },
+    "content": "Défi proposé : Créer une **application To-Do List** en Next.js.\n\nLes apprenants devront :\n1. Initialiser un projet Next.js.\n2. Construire des composants réutilisables (entrée de texte, liste de tâches, bouton de suppression).\n3. Gérer l’état local avec `useState`.\n4. Comprendre le cycle de rendu et le comportement dynamique de React/Next.js.\n\nLe formateur adopte un rôle de facilitateur : il pose des questions guidantes, encourage la réflexion, et aide les étudiants à identifier leurs propres erreurs comme leviers d’apprentissage."
+  },
+  {
+  "section": "cours",
+  "title": "Phases pédagogiques",
+  "meta": {
+    "durée": "5 min",
+    "niveau": "Déroulement"
+  },
+  "content": "1. Introduction (10 min)\nObjectif : Activer les connaissances antérieures et présenter le cadre d’apprentissage.\nL’enseignant introduit Next.js et explique son rôle dans le développement web moderne. Il invite les étudiants à partager leurs expériences avec React et les amène à identifier les besoins que Next.js peut résoudre.\n\n2. Pratique guidée (25 min)\nObjectif : Construire ensemble la base du projet.\nL’enseignant montre pas à pas comment initialiser un projet avec la commande npx create-next-app. Les étudiants reproduisent les étapes, explorent la structure des fichiers (pages, components, public, styles) et découvrent la logique du routage automatique propre à Next.js.\n\n3. Expérimentation libre (30 min)\nObjectif : Apprendre par la pratique et la résolution de problèmes.\nLes apprenants travaillent en binôme pour développer leur application To-Do List. Ils implémentent les fonctions d’ajout, de suppression et d’affichage des tâches. L’enseignant observe, guide et aide à la réflexion sans fournir directement les solutions. L’erreur est utilisée comme outil de compréhension.\n\n4. Restitution collective (15 min)\nObjectif : Partager les résultats et consolider les acquis.\nChaque groupe présente sa solution, compare les approches et discute des bonnes pratiques observées. L’enseignant met en avant les principes essentiels tels que l’utilisation des hooks (useState, useEffect), la réutilisation des composants et la clarté du code.\n\n5. Évaluation et réflexion (10 min)\nObjectif : Consolider les apprentissages et encourager la réflexion critique.\nL’enseignant anime un retour collectif sur les difficultés rencontrées et les réussites. Les apprenants expriment ce qu’ils ont compris du fonctionnement de Next.js et identifient les compétences qu’ils souhaitent renforcer.\nQuestion de réflexion : Quelle étape de la séance t’a le plus aidé à comprendre la logique de Next.js, et pourquoi ?\n\nBilan général : Cette progression alterne entre guidage et autonomie. Elle favorise un apprentissage actif et collaboratif où la compréhension émerge de la pratique, de la réflexion et du partage d’expériences."
+}
+,
+  {
+    "section": "cours",
+    "title": "Lancement de l’atelier pratique",
+    "meta": {
+      "durée": "1 min",
+      "niveau": "Application"
+    },
+    "content": "Vous disposez maintenant d’une compréhension globale du concept et du cadre d’apprentissage.\n\n➡️ Passez à **l’atelier pratique** pour construire étape par étape votre **application To-Do List en Next.js**.\n\nChaque étape du développement vous permettra d’appliquer la théorie, d’expérimenter, et de renforcer vos compétences professionnelles.",
+    "action": "commencer-atelier"
+  }
+]

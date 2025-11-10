@@ -22,10 +22,6 @@ export default function Router() {
 
   return (
     <div>
-      <div style={{ display: 'flex', justifyContent: 'center', gap: 16, padding: '12px 0' }}>
-        <button className="btn" onClick={() => navigate('/activity1')}>Activity 1 – Theory</button>
-        <button className="btn primary" onClick={() => navigate('/activity2')}>Activity 2 – Workshop</button>
-      </div>
       {route === 'activity1' ? <Activity1 /> : <Activity2 />}
     </div>
   );
