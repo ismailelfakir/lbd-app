@@ -171,7 +171,7 @@ export default function App() {
         <div className="deck">
           <div className="workshop-header">
             <h2 className="workshop-title">
-              💻 {t('workshop')} – {t('step')} {currentIndex + 1} / {total}
+              {t('workshop')} – {t('step')} {currentIndex + 1} / {total}
               {showQuiz && <span className="quiz-indicator"> · {t('quizCheckpoint')}</span>}
             </h2>
           </div>
@@ -180,7 +180,7 @@ export default function App() {
           </div>
           {isComplete ? (
             <div className="completion-message">
-              <h2>🎓 {t('workshopCompleted')}</h2>
+              <h2>{t('workshopCompleted')}</h2>
               <p>{t('congratulations')}</p>
               <button className="btn primary" onClick={restart}>🔁 {t('restartWorkshop')}</button>
             </div>

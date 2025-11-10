@@ -14,6 +14,15 @@ type StepData = {
   sandbox?: { template?: string; file?: string };
 };
 
+function formatExplainText(text: string): string {
+  const esc = (s: string) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
+  let html = esc(text);
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
 function renderMarkdown(md: string) {
   const esc = (s: string) => s.replaceAll('&', '&amp;').replaceAll('<', '&lt;').replaceAll('>', '&gt;');
   const toInline = (s: string) => {
@@ -22,8 +31,10 @@ function renderMarkdown(md: string) {
     html = html.replace(/`([^`]+)`/g, '<code>$1</code>');
     html = html.replace(/\[([^\]]+)\]\(([^)]+)\)/g, '<a href="$2" target="_blank" rel="noopener noreferrer">$1</a>');
     html = html.replace(/\*([^*]+)\*/g, '<em>$1</em>');
+    html = html.replace(/\n/g, '<br>');
     return html;
   };
+  
   const lines = md.split('\n');
   const out: JSX.Element[] = [];
   let list: string[] = [];
@@ -95,8 +106,16 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
           <CodeBlock code={step.code} />
           {step.explain ? (
             <div className="explain-box">
-              <h4>💡 {t('explanation')}</h4>
-              <p>{step.explain}</p>
+              <div className="explain-box-header">
+                <svg className="explain-box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                  <path d="M9 21h6"></path>
+                  <path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4.5 3 6"></path>
+                  <path d="M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6"></path>
+                  <path d="M9 15h6"></path>
+                </svg>
+                <h4 className="explain-box-title">{t('explanation')}</h4>
+              </div>
+              <div className="explain-box-content" dangerouslySetInnerHTML={{ __html: formatExplainText(step.explain) }} />
             </div>
           ) : null}
           {step.sandbox?.file ? (
@@ -106,7 +125,7 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
       ) : null}
       {showQuiz && isQCM ? (
         <div className="quiz-box">
-          <h4>🧠 {(step.quiz as { question: string; options: string[]; answer: string }).question}</h4>
+          <h4>{(step.quiz as { question: string; options: string[]; answer: string }).question}</h4>
           <div className="quiz-options">
             {(step.quiz as { question: string; options: string[]; answer: string }).options.map((opt, idx) => (
               <button
@@ -125,7 +144,7 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
         </div>
       ) : showQuiz && step.quiz && typeof step.quiz === 'string' ? (
         <div className="reflect-box">
-          <h4>💭 {t('reflect')}</h4>
+          <h4>{t('reflect')}</h4>
           <p>{step.quiz}</p>
         </div>
       ) : null}

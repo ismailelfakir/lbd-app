@@ -25,19 +25,22 @@ type StepProps = {
   step: StepData;
 };
 
-function renderMarkdown(md: string) {
-  const escapeHtml = (str: string) =>
-    str
-      .replaceAll('&', '&amp;')
-      .replaceAll('<', '&lt;')
-      .replaceAll('>', '&gt;');
+function escapeHtml(str: string): string {
+  return str
+    .replaceAll('&', '&amp;')
+    .replaceAll('<', '&lt;')
+    .replaceAll('>', '&gt;');
+}
 
-  const toHtmlInline = (text: string) => {
-    let html = escapeHtml(text);
-    html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
-    html = html.replace(/`([^`]+?)`/g, '<code>$1</code>');
-    return html;
-  };
+function toHtmlInline(text: string): string {
+  let html = escapeHtml(text);
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/`([^`]+?)`/g, '<code>$1</code>');
+  html = html.replace(/\n/g, '<br>');
+  return html;
+}
+
+function renderMarkdown(md: string) {
 
   const lines = md.split('\n');
   const elements: JSX.Element[] = [];
@@ -144,8 +147,17 @@ export default function Step({ step }: StepProps) {
         </div>
       ) : null}
       {step.explain ? (
-        <div className="explain">
-          <strong>💡 Note:</strong> {step.explain}
+        <div className="explain-box">
+          <div className="explain-box-header">
+            <svg className="explain-box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="M9 21h6"></path>
+              <path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4.5 3 6"></path>
+              <path d="M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6"></path>
+              <path d="M9 15h6"></path>
+            </svg>
+            <h4 className="explain-box-title">Note</h4>
+          </div>
+          <div className="explain-box-content" dangerouslySetInnerHTML={{ __html: toHtmlInline(step.explain) }} />
         </div>
       ) : null}
       {step.code && isWorkshop ? (
