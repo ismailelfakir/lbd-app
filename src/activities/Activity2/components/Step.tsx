@@ -55,20 +55,46 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
   const { t } = useI18n();
   const [selected, setSelected] = useState<string | null>(null);
   const [feedback, setFeedback] = useState<string | null>(null);
+  const [attempts, setAttempts] = useState<number>(0);
 
   const isQCM = step.quiz && typeof step.quiz === 'object' && 'question' in step.quiz;
+  const maxAttempts = 3;
+  const quizData = (step.quiz as { question: string; options: string[]; answer: string }) || null;
+  const isFinalized = !!feedback && (feedback.includes('✅') || attempts >= maxAttempts);
 
   const handleAnswer = useCallback((option: string, isCorrect: boolean) => {
-    setSelected(option);
-    setFeedback(isCorrect ? `✅ ${t('correct')}` : `❌ ${t('tryAgain')}`);
-    if (onQuizAnswered) {
-      onQuizAnswered();
+    if (!quizData) return;
+
+    // If quiz already finalized, ignore further input
+    if (isFinalized) return;
+
+    if (isCorrect) {
+      setSelected(option);
+      setFeedback(`✅ ${t('correct')}`);
+      if (onQuizAnswered) onQuizAnswered();
+      return;
     }
-  }, [onQuizAnswered, t]);
+
+    // Incorrect answer path
+    setSelected(option);
+    setAttempts((prev) => {
+      const nextAttempts = prev + 1;
+      if (nextAttempts >= maxAttempts) {
+        // Reveal correct answer and finalize
+        setSelected(quizData.answer);
+        setFeedback(`✅ ${t('correct')}`);
+        if (onQuizAnswered) onQuizAnswered();
+      } else {
+        setFeedback(`❌ ${t('tryAgain')}`);
+      }
+      return nextAttempts;
+    });
+  }, [onQuizAnswered, quizData, isFinalized, t]);
 
   useEffect(() => {
     setSelected(null);
     setFeedback(null);
+    setAttempts(0);
   }, [step.title, showQuiz]);
 
   useEffect(() => {
@@ -76,14 +102,15 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
     const quiz = step.quiz as { question: string; options: string[]; answer: string };
     function handleKey(e: KeyboardEvent) {
       const num = parseInt(e.key);
-      if (num >= 1 && num <= quiz.options.length && !selected) {
-        const option = quiz.options[num - 1];
-        handleAnswer(option, option === quiz.answer);
-      }
+      if (Number.isNaN(num)) return;
+      if (num < 1 || num > quiz.options.length) return;
+      if (isFinalized) return;
+      const option = quiz.options[num - 1];
+      handleAnswer(option, option === quiz.answer);
     }
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [isQCM, step.quiz, selected, handleAnswer, showQuiz]);
+  }, [isQCM, step.quiz, handleAnswer, showQuiz, isFinalized]);
 
   return (
     <article className="step" role="region" aria-label={step.title}>
@@ -132,7 +159,7 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
                 key={opt}
                 className={`quiz-option ${selected === opt ? 'selected' : ''} ${selected && opt === (step.quiz as { question: string; options: string[]; answer: string }).answer ? 'correct' : ''} ${selected && selected === opt && opt !== (step.quiz as { question: string; options: string[]; answer: string }).answer ? 'incorrect' : ''}`}
                 onClick={() => handleAnswer(opt, opt === (step.quiz as { question: string; options: string[]; answer: string }).answer)}
-                disabled={!!selected}
+                disabled={isFinalized}
                 aria-label={`Option ${idx + 1}: ${opt}`}
               >
                 <span className="quiz-option-number">{idx + 1}</span>
@@ -141,6 +168,11 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
             ))}
           </div>
           {feedback && <p className={`quiz-feedback ${feedback.includes('✅') ? 'correct' : 'incorrect'}`}>{feedback}</p>}
+          {!isFinalized ? (
+            <p className="quiz-attempts" aria-live="polite">
+              {attempts}/{maxAttempts}
+            </p>
+          ) : null}
         </div>
       ) : showQuiz && step.quiz && typeof step.quiz === 'string' ? (
         <div className="reflect-box">
