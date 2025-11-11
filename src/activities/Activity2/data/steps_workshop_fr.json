@@ -1,110 +1,68 @@
 [
   {
     "section": "workshop",
-    "title": "Étape 1 – Vue d'ensemble du projet",
-    "meta": { "duration": "2 min", "difficulty": "Intro", "tags": ["aperçu", "Next.js 14", "configuration"] },
-    "content": "Bienvenue dans l'**Atelier Next.js 14 + TypeScript – To-Do App** !\n\nDans cette activité pratique, vous allez progressivement créer une **application To-Do List complète** en utilisant l'App Router. Chaque étape introduit un nouveau concept : configuration du projet, composants, gestion de l'état, style et déploiement. C'est l'essence de *Learning by Doing*."
+    "title": "Étape 1 – Présentation du projet",
+    "meta": { "duration": "2 min", "difficulty": "Intro", "tags": ["vue d’ensemble", "Next.js 14", "installation"] },
+    "content": "Bienvenue dans l’**Atelier Next.js 14 + TypeScript – Application To-Do List** !\n\nDans cette activité pratique, vous allez construire pas à pas une **application complète de liste de tâches** en utilisant l’App Router. Chaque étape introduira un nouveau concept : configuration du projet, composants, gestion d’état, styles et déploiement. C’est l’essence même de l’*apprentissage par la pratique*."
   },
   {
     "section": "workshop",
     "title": "Étape 2 – Préparer l’environnement",
     "meta": { "duration": "3 min", "difficulty": "Intro" },
-    "content": "Assurez-vous que votre système est prêt :\n\n1️⃣ Installez **Node.js v18+ (LTS)** depuis [nodejs.org](https://nodejs.org)\n2️⃣ Utilisez un éditeur moderne comme **VS Code**.\n3️⃣ Vérifiez vos versions :",
+    "content": "Assurez-vous que votre environnement est prêt :\n\n1️⃣ Installez **Node.js v18+ (LTS)** depuis [nodejs.org](https://nodejs.org)\n2️⃣ Utilisez un éditeur moderne comme **VS Code**.\n3️⃣ Vérifiez vos versions :",
     "code": "node -v\nnpm -v",
-    "explain": "Utilisez toujours une version LTS (Long-Term Support) pour la stabilité et la compatibilité.",
-    "quiz": {
-      "question": "Quelle commande permet de vérifier la version de Node.js ?",
-      "options": ["node --ver", "npm version", "node -v", "check node"],
-      "answer": "node -v"
-    }
+    "explain": "Utilisez toujours une version LTS (Long-Term Support) pour garantir la stabilité et la compatibilité."
   },
   {
     "section": "workshop",
     "title": "Étape 3 – Créer un nouveau projet",
     "meta": { "duration": "4 min", "difficulty": "Facile" },
-    "content": "Créons la base de votre projet :\n\nOuvrez votre terminal et exécutez :",
+    "content": "Ouvrez votre terminal et exécutez :",
     "code": "npx create-next-app@latest next-todo --typescript --eslint --app\ncd next-todo\nnpm run dev",
-    "explain": "Visitez `http://localhost:3000` pour confirmer que tout fonctionne.",
-    "quiz": {
-      "question": "Quel drapeau active l’App Router lors de la création d’une app Next.js ?",
-      "options": ["--router", "--pages", "--app", "--client"],
-      "answer": "--app"
-    }
+    "explain": "Rendez-vous sur **http://localhost:3000** pour vérifier que tout fonctionne correctement."
   },
   {
     "section": "workshop",
-    "title": "Étape 4 – Comprendre la structure",
+    "title": "Étape 4 – Comprendre la structure du projet",
     "meta": { "duration": "3 min", "difficulty": "Facile" },
-    "content": "Vous devriez maintenant voir la structure suivante :",
+    "content": "Vous devriez maintenant voir cette structure :",
     "code": "app/\n  layout.tsx\n  page.tsx\n  globals.css\ncomponents/\n  TodoList.tsx",
-    "explain": "Le dossier **app/** contient vos routes et layouts. Le dossier **components/** accueillera vos composants réutilisables.",
-    "quiz": {
-      "question": "Quel dossier définit les routes de pages dans un projet Next.js (App Router) ?",
-      "options": ["pages/", "routes/", "app/", "src/"],
-      "answer": "app/"
-    }
+    "explain": "Le dossier **app/** contient vos routes et vos layouts. Le dossier **components/** accueillera vos composants réutilisables."
   },
   {
     "section": "workshop",
     "title": "Étape 5 – Créer le composant To-Do List",
     "meta": { "duration": "8 min", "difficulty": "Intermédiaire" },
-    "content": "Créons maintenant votre premier **composant React interactif** en utilisant uniquement **React state** et **Tailwind CSS**. Cela vous donnera une base fonctionnelle avant d’ajouter des animations et des icônes.\n\nDans le dossier `components`, créez un fichier nommé **`TodoList.tsx`** et collez :",
-    "code": "'use client'\nimport { useState } from 'react'\n\nexport default function TodoList() {\n  const [tasks, setTasks] = useState<string[]>([])\n  const [input, setInput] = useState('')\n\n  const addTask = () => {\n    if (!input.trim()) return\n    setTasks([...tasks, input])\n    setInput('')\n  }\n\n  const deleteTask = (i: number) => setTasks(tasks.filter((_, index) => index !== i))\n\n  return (\n    <section className=\"min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6\">\n      <div className=\"bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md\">\n        <h1 className=\"text-2xl font-bold text-center mb-4\">Ma To-Do List</h1>\n        <div className=\"flex gap-2 mb-4\">\n          <input type=\"text\" value={input} onChange={(e) => setInput(e.target.value)} placeholder=\"Entrez une nouvelle tâche\" className=\"flex-1 px-3 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500\" />\n          <button onClick={addTask} className=\"bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-semibold\">Ajouter</button>\n        </div>\n        <ul className=\"space-y-2\">\n          {tasks.map((task, i) => (\n            <li key={i} className=\"flex justify-between items-center bg-gray-700 px-3 py-2 rounded-lg\">\n              <span>{task}</span>\n              <button onClick={() => deleteTask(i)} className=\"text-red-400 hover:text-red-500\">❌</button>\n            </li>\n          ))}\n        </ul>\n      </div>\n    </section>\n  )\n}",
-    "explain": "Dans cette étape, vous apprenez à gérer une liste de tâches avec `useState`. Vous pouvez ajouter et supprimer des éléments, tandis que Tailwind CSS donne une présentation moderne et claire.",
-    "quiz": {
-      "question": "Quel hook React permet de stocker la liste des tâches ?",
-      "options": ["useRef", "useEffect", "useState", "useMemo"],
-      "answer": "useState"
-    }
+    "content": "Créons votre premier **composant React interactif** en utilisant **l’état local** et **Tailwind CSS**.\n\nDans le dossier `components`, créez un fichier nommé **`TodoList.tsx`** et collez le code suivant :",
+    "code": "'use client'\nimport { useState } from 'react'\n\nexport default function TodoList() {\n  const [tasks, setTasks] = useState<string[]>([])\n  const [input, setInput] = useState('')\n\n  const addTask = () => {\n    if (!input.trim()) return\n    setTasks([...tasks, input])\n    setInput('')\n  }\n\n  const deleteTask = (i: number) => setTasks(tasks.filter((_, index) => index !== i))\n\n  return (\n    <section className=\"min-h-screen flex flex-col items-center justify-center bg-gray-900 text-white p-6\">\n      <div className=\"bg-gray-800 p-6 rounded-xl shadow-xl w-full max-w-md\">\n        <h1 className=\"text-2xl font-bold text-center mb-4\">Ma To-Do List</h1>\n        <div className=\"flex gap-2 mb-4\">\n          <input\n            type=\"text\"\n            value={input}\n            onChange={(e) => setInput(e.target.value)}\n            placeholder=\"Entrez une nouvelle tâche\"\n            className=\"flex-1 px-3 py-2 rounded-lg bg-gray-700 border border-gray-600 focus:outline-none focus:ring-2 focus:ring-indigo-500\"\n          />\n          <button\n            onClick={addTask}\n            className=\"bg-indigo-600 hover:bg-indigo-700 px-4 py-2 rounded-lg font-semibold\"\n          >Ajouter</button>\n        </div>\n        <ul className=\"space-y-2\">\n          {tasks.map((task, i) => (\n            <li key={i} className=\"flex justify-between items-center bg-gray-700 px-3 py-2 rounded-lg\">\n              <span>{task}</span>\n              <button onClick={() => deleteTask(i)} className=\"text-red-400 hover:text-red-500\">❌</button>\n            </li>\n          ))}\n        </ul>\n      </div>\n    </section>\n  )\n}"
+  },
+  {
+    "section": "workshop",
+    "title": "Étape 5.5 – Afficher le composant dans l’application",
+    "meta": { "duration": "3 min", "difficulty": "Facile" },
+    "content": "Maintenant que le composant `TodoList` est prêt, affichons-le sur la page principale.\n\nOuvrez **`app/page.tsx`** et importez votre composant :",
+    "code": "import TodoList from '../components/TodoList'\n\nexport default function Page() {\n  return <TodoList />\n}",
+    "explain": "Le fichier `app/page.tsx` représente la page d’accueil (`/`). En y important `TodoList`, il s’affichera directement dans votre application."
   },
   {
     "section": "workshop",
     "title": "Étape 6 – Installer les bibliothèques d’animations et d’icônes",
     "meta": { "duration": "3 min", "difficulty": "Facile" },
-    "content": "Pour rendre votre To-Do List plus attrayante et interactive, installons **Framer Motion** (pour les animations) et **Lucide React** (pour les icônes).",
+    "content": "Pour rendre votre To-Do List plus attrayante et interactive, installez **Framer Motion** (pour les animations) et **Lucide React** (pour les icônes).",
     "code": "npm install framer-motion lucide-react",
-    "explain": "**Framer Motion** offre des animations fluides pour React, tandis que **Lucide React** fournit des icônes SVG modernes et minimalistes.",
-    "quiz": {
-      "question": "Quelle bibliothèque est utilisée pour les animations React ?",
-      "options": ["Lucide React", "Framer Motion", "Tailwind CSS", "React Spring"],
-      "answer": "Framer Motion"
-    }
+    "explain": "Framer Motion ajoute des animations fluides ; Lucide React fournit des icônes SVG modernes et élégantes."
   },
   {
     "section": "workshop",
-    "title": "Étape 7 – Créer l’interface To-Do List professionnelle",
+    "title": "Étape 7 – Créer une interface professionnelle",
     "meta": { "duration": "10 min", "difficulty": "Intermédiaire" },
-    "content": "Les dépendances sont installées ! Ajoutons maintenant des **animations**, des **icônes** et la **persistance** grâce au `localStorage`.",
-    "code": "'use client'\nimport { useState, useEffect } from 'react'\nimport { motion } from 'framer-motion'\nimport { PlusCircle, Trash2, FolderX } from 'lucide-react'\n\nexport default function TodoList() {\n  const [tasks, setTasks] = useState<string[]>([])\n  const [input, setInput] = useState('')\n\n  useEffect(() => {\n    const saved = localStorage.getItem('tasks')\n    if (saved) setTasks(JSON.parse(saved))\n  }, [])\n\n  useEffect(() => {\n    localStorage.setItem('tasks', JSON.stringify(tasks))\n  }, [tasks])\n\n  const addTask = () => {\n    if (!input.trim()) return\n    setTasks([...tasks, input])\n    setInput('')\n  }\n\n  const deleteTask = (i: number) => setTasks(tasks.filter((_, index) => index !== i))\n  const clearTasks = () => setTasks([])\n\n  return (\n    <section className=\"min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex items-center justify-center p-6\">\n      <div className=\"w-full max-w-lg bg-gray-800/60 backdrop-blur-xl border border-gray-700 shadow-2xl rounded-2xl p-8\">\n        <h1 className=\"text-3xl font-bold mb-2 text-center tracking-tight\">Ma To-Do List</h1>\n        <p className=\"text-gray-400 text-center mb-6\">Total des tâches : {tasks.length}</p>\n        <div className=\"flex gap-2 mb-6\">\n          <input type=\"text\" value={input} onChange={(e) => setInput(e.target.value)} placeholder=\"Entrer une nouvelle tâche\" className=\"flex-1 bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500\" />\n          <button onClick={addTask} className=\"flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 transition rounded-lg px-4 py-2 font-semibold\"><PlusCircle size={18}/> Ajouter</button>\n        </div>\n        {tasks.length > 0 && (\n          <button onClick={clearTasks} className=\"flex items-center gap-1 bg-red-600 hover:bg-red-700 transition rounded-lg px-4 py-2 font-semibold mb-6 mx-auto\"><FolderX size={18}/> Tout effacer</button>\n        )}\n        {tasks.length === 0 ? (\n          <p className=\"text-gray-400 text-center italic\">Aucune tâche pour le moment.</p>\n        ) : (\n          <ul className=\"space-y-3\">\n            {tasks.map((t, i) => (\n              <motion.li key={i} initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-10}} className=\"flex justify-between items-center p-4 rounded-lg border bg-gray-700/50 border-gray-600 hover:bg-gray-700/70 transition\">\n                <span className=\"text-lg text-gray-100\">{t}</span>\n                <button onClick={() => deleteTask(i)} className=\"text-red-400 hover:text-red-500 transition\"><Trash2 size={20}/></button>\n              </motion.li>\n            ))}\n          </ul>\n        )}\n      </div>\n    </section>\n  )\n}",
-    "explain": "Vous disposez maintenant d’une To-Do List élégante, animée et persistante grâce à **Tailwind CSS**, **Framer Motion** et **Lucide React**. Les tâches sont automatiquement sauvegardées dans `localStorage`.",
-    "quiz": {
-      "question": "Quelle API du navigateur permet de sauvegarder les tâches localement ?",
-      "options": ["SessionStorage", "useEffect", "localStorage", "Cache API"],
-      "answer": "localStorage"
-    }
+    "content": "Améliorons la To-Do List avec des animations, des icônes et la sauvegarde automatique grâce à **localStorage**.",
+    "code": "'use client'\nimport { useState, useEffect } from 'react'\nimport { motion } from 'framer-motion'\nimport { PlusCircle, Trash2, FolderX } from 'lucide-react'\n\nexport default function TodoList() {\n  const [tasks, setTasks] = useState<string[]>([])\n  const [input, setInput] = useState('')\n\n  useEffect(() => {\n    const saved = localStorage.getItem('tasks')\n    if (saved) setTasks(JSON.parse(saved))\n  }, [])\n\n  useEffect(() => {\n    localStorage.setItem('tasks', JSON.stringify(tasks))\n  }, [tasks])\n\n  const addTask = () => {\n    if (!input.trim()) return\n    setTasks([...tasks, input])\n    setInput('')\n  }\n\n  const deleteTask = (i: number) => setTasks(tasks.filter((_, index) => index !== i))\n  const clearTasks = () => setTasks([])\n\n  return (\n    <section className=\"min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex items-center justify-center p-6\">\n      <div className=\"w-full max-w-lg bg-gray-800/60 backdrop-blur-xl border border-gray-700 shadow-2xl rounded-2xl p-8\">\n        <h1 className=\"text-3xl font-bold mb-2 text-center tracking-tight\">Ma To-Do List</h1>\n        <p className=\"text-gray-400 text-center mb-6\">Nombre total de tâches : {tasks.length}</p>\n\n        <div className=\"flex gap-2 mb-6\">\n          <input\n            type=\"text\"\n            value={input}\n            onChange={(e) => setInput(e.target.value)}\n            placeholder=\"Ajouter une nouvelle tâche\"\n            className=\"flex-1 bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500\"\n          />\n          <button onClick={addTask} className=\"flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 transition rounded-lg px-4 py-2 font-semibold\">\n            <PlusCircle size={18}/> Ajouter\n          </button>\n        </div>\n\n        {tasks.length > 0 && (\n          <button onClick={clearTasks} className=\"flex items-center gap-1 bg-red-600 hover:bg-red-700 transition rounded-lg px-4 py-2 font-semibold mb-6 mx-auto\">\n            <FolderX size={18}/> Tout effacer\n          </button>\n        )}\n\n        {tasks.length === 0 ? (\n          <p className=\"text-gray-400 text-center italic\">Aucune tâche pour le moment.</p>\n        ) : (\n          <ul className=\"space-y-3\">\n            {tasks.map((t, i) => (\n              <motion.li key={i} initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }} className=\"flex justify-between items-center p-4 rounded-lg border bg-gray-700/50 border-gray-600 hover:bg-gray-700/70 transition\">\n                <span className=\"text-lg text-gray-100\">{t}</span>\n                <button onClick={() => deleteTask(i)} className=\"text-red-400 hover:text-red-500 transition\">\n                  <Trash2 size={20}/>\n                </button>\n              </motion.li>\n            ))}\n          </ul>\n        )}\n      </div>\n    </section>\n  )\n}"
   },
   {
     "section": "workshop",
-    "title": "Étape 8 – Comprendre la version finale et la persistance",
-    "meta": { "duration": "8 min", "difficulty": "Intermédiaire" },
-    "content": "Si vous n’avez pas encore le code complet de la version finale, copiez-collez celui-ci dans votre fichier **`TodoList.tsx`**. C’est la version professionnelle avec animations, icônes et sauvegarde automatique des tâches :",
-    "code": "'use client'\nimport { useState, useEffect } from 'react'\nimport { motion } from 'framer-motion'\nimport { PlusCircle, Trash2, FolderX } from 'lucide-react'\n\nexport default function TodoList() {\n  const [tasks, setTasks] = useState<string[]>([])\n  const [input, setInput] = useState('')\n\n  // Charger les tâches sauvegardées au démarrage\n  useEffect(() => {\n    const saved = localStorage.getItem('tasks')\n    if (saved) setTasks(JSON.parse(saved))\n  }, [])\n\n  // Sauvegarder automatiquement à chaque modification\n  useEffect(() => {\n    localStorage.setItem('tasks', JSON.stringify(tasks))\n  }, [tasks])\n\n  const addTask = () => {\n    if (!input.trim()) return\n    setTasks([...tasks, input])\n    setInput('')\n  }\n\n  const deleteTask = (i: number) => setTasks(tasks.filter((_, index) => index !== i))\n  const clearTasks = () => setTasks([])\n\n  return (\n    <section className=\"min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-black text-white flex items-center justify-center p-6\">\n      <div className=\"w-full max-w-lg bg-gray-800/60 backdrop-blur-xl border border-gray-700 shadow-2xl rounded-2xl p-8\">\n        <h1 className=\"text-3xl font-bold mb-2 text-center tracking-tight\">📝 Ma To-Do List</h1>\n        <p className=\"text-gray-400 text-center mb-6\">Total des tâches : {tasks.length}</p>\n        <div className=\"flex gap-2 mb-6\">\n          <input type=\"text\" value={input} onChange={(e) => setInput(e.target.value)} placeholder=\"Entrer une nouvelle tâche\" className=\"flex-1 bg-gray-700 text-white placeholder-gray-400 border border-gray-600 rounded-lg px-4 py-2 focus:outline-none focus:ring-2 focus:ring-indigo-500\" />\n          <button onClick={addTask} className=\"flex items-center gap-1 bg-indigo-600 hover:bg-indigo-700 transition rounded-lg px-4 py-2 font-semibold\"><PlusCircle size={18}/> Ajouter</button>\n        </div>\n        {tasks.length > 0 && (\n          <button onClick={clearTasks} className=\"flex items-center gap-1 bg-red-600 hover:bg-red-700 transition rounded-lg px-4 py-2 font-semibold mb-6 mx-auto\"><FolderX size={18}/> Tout effacer</button>\n        )}\n        {tasks.length === 0 ? (\n          <p className=\"text-gray-400 text-center italic\">Aucune tâche pour le moment.</p>\n        ) : (\n          <ul className=\"space-y-3\">\n            {tasks.map((t, i) => (\n              <motion.li key={i} initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} exit={{opacity:0, y:-10}} className=\"flex justify-between items-center p-4 rounded-lg border bg-gray-700/50 border-gray-600 hover:bg-gray-700/70 transition\">\n                <span className=\"text-lg text-gray-100\">{t}</span>\n                <button onClick={() => deleteTask(i)} className=\"text-red-400 hover:text-red-500 transition\"><Trash2 size={20}/></button>\n              </motion.li>\n            ))}\n          </ul>\n        )}\n      </div>\n    </section>\n  )\n}",
-    "explain": "Ce qui a été ajouté depuis l’étape 5 :\n1️⃣ **`useEffect`** pour charger et sauvegarder les tâches dans le navigateur via `localStorage`.\n2️⃣ **Animations** avec **Framer Motion** : les éléments apparaissent et disparaissent en douceur.\n3️⃣ **Icônes** avec **Lucide React** pour un design plus professionnel (boutons Ajouter / Supprimer / Effacer tout).\n4️⃣ **Style amélioré** : dégradé de fond, ombres, coins arrondis et couleurs dynamiques.\n\n➡️ **Résultat final :** votre To-Do List est maintenant **esthétique, animée et persistante**.",
-    "quiz": {
-      "question": "Quel hook React est utilisé pour synchroniser les tâches avec `localStorage` ?",
-      "options": ["useState", "useRef", "useEffect", "useCallback"],
-      "answer": "useEffect"
-    }
-  },
-  {
-    "section": "workshop",
-    "title": "Étape 9 – Déployer et conclure",
+    "title": "Étape 8 – Déployer et conclure",
     "meta": { "duration": "3 min", "difficulty": "Intro" },
-    "content": "Bravo ! Vous avez terminé votre projet To-Do List avec Next.js et TypeScript.\n\nDéployez-le en poussant le code sur **GitHub**, puis connectez-le à [Vercel](https://vercel.com) pour le mettre en ligne.\n\nVous maîtrisez désormais le flux complet :\n**Structure → Code → Style → Persistance → Déploiement**.",
-    "quiz": {
-      "question": "Quelle plateforme est optimisée pour héberger les applications Next.js ?",
-      "options": ["Netlify", "Heroku", "Vercel", "Render"],
-      "answer": "Vercel"
-    }
+    "content": "Félicitations 🎉 Votre application est terminée !\n\nDéployez-la en poussant le code sur **GitHub**, puis en le connectant à [Vercel](https://vercel.com).\n\nVous comprenez maintenant tout le flux de travail :\n**Initialisation → Code → Style → Sauvegarde → Déploiement.**"
   }
 ]

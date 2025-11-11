@@ -1,78 +1,138 @@
 [
   {
     "section": "course",
-    "title": "Welcome",
-    "meta": {
-      "duration": "3 min",
-      "difficulty": "Introduction",
-      "tags": ["theory", "overview"]
-    },
-    "content": "# Welcome\nThis learning session introduces **Next.js**, a modern framework based on React, through a **constructivist** approach.\n\n## What you will discover\n- Part 1: a theoretical and contextual introduction on the role of Next.js in modern web development.\n- Part 2: a guided practical activity where you will build a complete **To-Do List application** in Next.js.\n\nThe goal is to learn by building, to experiment with technical concepts while developing a solid understanding through practice."
+    "title": "Step 1 – Introduction to Next.js",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["overview", "React", "framework"] },
+    "content": "Welcome to the **Next.js 14 Fundamentals Course**!\n\nNext.js is a powerful **React framework** created by **Vercel**. It helps developers build fast, scalable, and SEO-friendly applications using modern web standards. This module will explain *why* Next.js is important, *how* it works, and *what* makes it different from traditional React.",
+    "explain": "Next.js builds upon React, adding routing, rendering, and performance optimizations out of the box.",
+    "quiz": {
+      "question": "Who created and maintains the Next.js framework?",
+      "options": ["Google", "Vercel", "Meta", "Microsoft"],
+      "answer": "Vercel"
+    }
   },
   {
     "section": "course",
-    "title": "Learning Theory: Constructivism",
-    "meta": {
-      "duration": "5 min",
-      "difficulty": "Introduction",
-      "tags": ["theory", "constructivism"]
-    },
-    "content": "> **Constructivism** considers that learners actively construct their knowledge by experimenting, reflecting, and correcting their errors.\n\n- Error is a **natural step** in the learning process, not a failure.\n- **Understanding emerges from action**: we learn better by doing.\n- **Reflection** and **practice** transform experience into lasting knowledge.\n\nIn this framework, the teacher becomes a **guide** who helps learners construct their own mental models through concrete situations."
+    "title": "Step 2 – Setup Environment",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["Node.js", "setup"] },
+    "content": "Before building with Next.js, make sure your environment is ready:\n\n1️⃣ Install **Node.js v18+ (LTS)** from [nodejs.org](https://nodejs.org)\n2️⃣ Use **VS Code** as your editor\n3️⃣ Verify your versions:",
+    "code": "node -v\nnpm -v",
+    "explain": "Next.js requires Node.js version 18 or higher. npm (included with Node.js) is used to install dependencies.",
+    "quiz": {
+      "question": "Which command verifies your Node.js version?",
+      "options": ["npm -v", "node --check", "node -v", "ver node"],
+      "answer": "node -v"
+    }
   },
   {
     "section": "course",
-    "title": "Overall Session Goal",
-    "meta": {
-      "duration": "2 min",
-      "difficulty": "Introduction"
-    },
-    "content": "Develop a practical and functional understanding of **Next.js** by creating a simple, interactive, and structured application that manages a task list (To-Do List)."
+    "title": "Step 3 – Create a Next.js Project",
+    "meta": { "duration": "4 min", "difficulty": "Easy", "tags": ["create-next-app", "starter"] },
+    "content": "To initialize a new Next.js app, run the following command in your terminal:",
+    "code": "npx create-next-app@latest next-theory --typescript --app\ncd next-theory\nnpm run dev",
+    "explain": "The command creates a complete TypeScript-based Next.js project with the App Router enabled. Open http://localhost:3000 to view your running app.",
+    "quiz": {
+      "question": "What flag enables the App Router when creating a Next.js app?",
+      "options": ["--pages", "--router", "--app", "--client"],
+      "answer": "--app"
+    }
   },
   {
     "section": "course",
-    "title": "Specific Objectives",
-    "meta": {
-      "duration": "3 min",
-      "difficulty": "Introduction"
-    },
-    "content": "- Identify the role and advantages of **Next.js** in the React ecosystem.\n- Create and structure a Next.js application from scratch.\n- Understand **routing**, **component creation**, and **dynamic rendering**.\n- Manage **state** and **user events** to make the application interactive.\n- Collaborate effectively in pairs to solve encountered problems."
+    "title": "Step 4 – Explore the Project Structure",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["structure", "App Router"] },
+    "content": "After project creation, your folder structure should look like this:",
+    "code": "app/\n  layout.tsx\n  page.tsx\n  globals.css\npublic/\n  favicon.ico\ncomponents/\n  Header.tsx\npackage.json",
+    "explain": "The **app/** folder defines your routes and layouts. Every folder with a `page.tsx` file becomes a route automatically.",
+    "quiz": {
+      "question": "Which folder defines routes in the App Router?",
+      "options": ["src/", "pages/", "app/", "routes/"],
+      "answer": "app/"
+    }
   },
   {
     "section": "course",
-    "title": "Teaching Context",
-    "meta": {
-      "duration": "2 min",
-      "difficulty": "Introduction"
-    },
-    "content": "Audience: Web development students (intermediate level).\nTotal duration: 90 minutes.\nMethod: **Learning by doing** and **pair work**.\nRequired tools: Visual Studio Code, web browser, official Next.js documentation, and GitHub for code sharing.\n\nThe work environment promotes autonomy, experimentation, and cooperation."
+    "title": "Step 5 – Understanding Rendering Modes",
+    "meta": { "duration": "5 min", "difficulty": "Intermediate", "tags": ["SSR", "SSG", "ISR", "CSR"] },
+    "content": "Next.js provides several rendering strategies depending on your needs:\n\n1️⃣ **SSR (Server-Side Rendering):** Content is rendered for each request.\n\n2️⃣ **SSG (Static Site Generation):** Pages are built once during build time.\n\n3️⃣ **ISR (Incremental Static Regeneration):** Static pages are rebuilt in the background.\n\n4️⃣ **CSR (Client-Side Rendering):** Traditional React rendering inside the browser.\n\nHere’s an example of SSR using the App Router:",
+    "code": "export default async function ServerPage() {\n  const res = await fetch('https://api.quotable.io/random', { cache: 'no-store' })\n  const data = await res.json()\n  return <p>Random quote: {data.content}</p>\n}",
+    "explain": "This page fetches fresh data on every request (`cache: 'no-store'`), demonstrating server-side rendering in Next.js.",
+    "quiz": {
+      "question": "Which rendering mode generates HTML on every request?",
+      "options": ["SSG", "ISR", "CSR", "SSR"],
+      "answer": "SSR"
+    }
   },
   {
     "section": "course",
-    "title": "Learning Situation",
-    "meta": {
-      "duration": "3 min",
-      "difficulty": "Introduction"
-    },
-    "content": "Challenge: Create a **To-Do List application** in Next.js.\n\nLearners will need to:\n1. Initialize a Next.js project.\n2. Build reusable components (text input, task list, delete button).\n3. Manage local state with `useState`.\n4. Understand the rendering cycle and dynamic behavior of React/Next.js.\n\nThe instructor adopts a facilitator role: asks guiding questions, encourages reflection, and helps students identify their own errors as learning levers."
+    "title": "Step 6 – Server vs Client Components",
+    "meta": { "duration": "5 min", "difficulty": "Intermediate", "tags": ["server components", "client components"] },
+    "content": "Next.js 13+ introduces **Server Components** (default) and **Client Components** (interactive).\n\nA **Server Component** runs on the server and doesn’t include client-side JavaScript. A **Client Component** must declare `'use client'` at the top to use hooks and events.",
+    "code": "'use client'\nimport { useState } from 'react'\n\nexport default function Counter() {\n  const [count, setCount] = useState(0)\n  return <button onClick={() => setCount(count + 1)}>Clicked {count} times</button>\n}",
+    "explain": "The `'use client'` directive makes this component interactive and able to use React hooks.",
+    "quiz": {
+      "question": "What directive enables interactivity in a component?",
+      "options": ["'client only'", "'interactive'", "'use client'", "'client mode'"],
+      "answer": "'use client'"
+    }
   },
   {
     "section": "course",
-    "title": "Pedagogical Phases",
-    "meta": {
-      "duration": "5 min",
-      "difficulty": "Process"
-    },
-    "content": "1. Introduction (10 min)\nObjective: Activate prior knowledge and present the learning framework.\nThe teacher introduces Next.js and explains its role in modern web development. They invite students to share their experiences with React and guide them to identify needs that Next.js can address.\n\n2. Guided Practice (25 min)\nObjective: Build the project foundation together.\nThe teacher demonstrates step-by-step how to initialize a project with the command npx create-next-app. Students reproduce the steps, explore the file structure (pages, components, public, styles) and discover the logic of automatic routing specific to Next.js.\n\n3. Free Experimentation (30 min)\nObjective: Learn through practice and problem-solving.\nLearners work in pairs to develop their To-Do List application. They implement add, delete, and display functions for tasks. The teacher observes, guides, and helps with reflection without providing solutions directly. Error is used as a tool for understanding.\n\n4. Collective Restitution (15 min)\nObjective: Share results and consolidate learning.\nEach group presents their solution, compares approaches, and discusses observed best practices. The teacher highlights essential principles such as using hooks (useState, useEffect), component reuse, and code clarity.\n\n5. Evaluation and Reflection (10 min)\nObjective: Consolidate learning and encourage critical reflection.\nThe teacher facilitates a collective review of difficulties encountered and successes. Learners express what they understood about Next.js functioning and identify skills they wish to strengthen.\nReflection question: Which step of the session helped you most understand Next.js logic, and why?\n\nGeneral Summary: This progression alternates between guidance and autonomy. It promotes active and collaborative learning where understanding emerges from practice, reflection, and sharing experiences."
+    "title": "Step 7 – File-Based Routing Example",
+    "meta": { "duration": "4 min", "difficulty": "Intermediate", "tags": ["routing", "App Router"] },
+    "content": "Next.js automatically creates routes from files inside the `app/` directory. Here’s how to create static and dynamic routes:",
+    "code": "app/\n  page.tsx          // Home page → '/'\n  about/page.tsx    // About page → '/about'\n  blog/[id]/page.tsx // Dynamic route → '/blog/:id'",
+    "explain": "Each folder with a `page.tsx` becomes a route. Dynamic segments like `[id]` capture URL parameters automatically.",
+    "quiz": {
+      "question": "What folder naming syntax defines a dynamic route?",
+      "options": ["{id}", "[id]", ":id", "<id>"],
+      "answer": "[id]"
+    }
   },
   {
     "section": "course",
-    "title": "Launch the Practical Workshop",
-    "meta": {
-      "duration": "1 min",
-      "difficulty": "Application"
-    },
-    "content": "You now have a global understanding of the concept and learning framework.\n\n➡️ Go to the **practical workshop** to build step by step your **To-Do List application in Next.js**.\n\nEach development step will allow you to apply theory, experiment, and strengthen your professional skills.",
+    "title": "Step 8 – Data Fetching Example",
+    "meta": { "duration": "4 min", "difficulty": "Intermediate", "tags": ["data fetching", "server side"] },
+    "content": "Data can be fetched directly in Server Components using async/await. Example:",
+    "code": "export default async function Users() {\n  const res = await fetch('https://jsonplaceholder.typicode.com/users')\n  const users = await res.json()\n  return (\n    <ul>\n      {users.slice(0, 3).map(u => <li key={u.id}>{u.name}</li>)}\n    </ul>\n  )\n}",
+    "explain": "Because this function runs on the server, data is fetched securely before sending HTML to the browser.",
+    "quiz": {
+      "question": "In which component type can you use async/await directly?",
+      "options": ["Client Components", "Server Components", "Both", "Neither"],
+      "answer": "Server Components"
+    }
+  },
+  {
+    "section": "course",
+    "title": "Step 9 – Creating an API Route",
+    "meta": { "duration": "4 min", "difficulty": "Intermediate", "tags": ["API", "backend"] },
+    "content": "Next.js allows you to create backend routes inside your app for handling data or requests.\n\nHere’s a simple API route example:",
+    "code": "// app/api/hello/route.ts\nexport async function GET() {\n  return Response.json({ message: 'Hello from API route!' })\n}",
+    "explain": "This creates an endpoint at `/api/hello`. You can add POST, PUT, or DELETE functions for full REST functionality.",
+    "quiz": {
+      "question": "Where are API routes defined in the App Router?",
+      "options": ["pages/api/", "app/api/", "src/api/", "server/routes/"],
+      "answer": "app/api/"
+    }
+  },
+  {
+    "section": "course",
+    "title": "Step 10 – Optimization and Deployment",
+    "meta": { "duration": "4 min", "difficulty": "Intermediate", "tags": ["optimization", "deployment"] },
+    "content": "Next.js includes built-in optimization tools for images, fonts, and SEO. Example:",
+    "code": "import Image from 'next/image'\n\nexport default function Hero() {\n  return <Image src=\"/hero.png\" alt=\"Hero\" width={800} height={400} />\n}",
+    "explain": "The `next/image` component automatically optimizes images for different devices and screen sizes.\n\nYou can deploy your project to **Vercel** by pushing your code to GitHub and linking the repository on [vercel.com](https://vercel.com).",
+    "quiz": {
+      "question": "Which component optimizes images automatically in Next.js?",
+      "options": ["<img>", "<Picture>", "<Image>", "<NextImg>"],
+      "answer": "<Image>"
+    }
+  },
+  {
+    "section": "course",
+    "title": "Step 11 – Reflection and Start Workshop",
+    "meta": { "duration": "2 min", "difficulty": "Application", "tags": ["reflection", "transition"] },
+    "content": "Congratulations! You now understand the **core concepts of Next.js** — rendering, routing, components, data fetching, and optimization.\n\nNow it's time to apply your knowledge in practice.\n\n➡️ Proceed to the **Next.js Workshop** and start building your own project step by step.",
     "action": "start-workshop"
   }
 ]
-
