@@ -89,7 +89,8 @@ export default function App() {
     triggerFade(() => setCurrentIndex((i) => Math.min(total - 1, i + 1)));
   }
   function handleStepChange(index: number) {
-    if (index === currentIndex) return;
+    // Disallow jumping ahead to unchecked steps
+    if (index === currentIndex || index > currentIndex) return;
     triggerFade(() => {
       setCurrentIndex(index);
       setShowQuiz(false);
@@ -182,7 +183,7 @@ export default function App() {
             <div className="completion-message">
               <h2>{t('workshopCompleted')}</h2>
               <p>{t('congratulations')}</p>
-              <button className="btn primary" onClick={restart}>🔁 {t('restartWorkshop')}</button>
+              <button className="btn primary" onClick={restart}>{t('restartWorkshop')}</button>
             </div>
           ) : (
             <div className="step-navigation">

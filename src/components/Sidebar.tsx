@@ -166,9 +166,11 @@ export default function Sidebar({
                     <button
                       key={index}
                       className={`step-nav-item ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''} ${isUpcoming ? 'is-upcoming' : ''}`}
-                      onClick={() => onStepChange(index)}
+                      onClick={() => { if (!isUpcoming) onStepChange(index); }}
+                      disabled={isUpcoming}
                       aria-current={isActive ? 'step' : undefined}
                       aria-label={`${t('step')} ${index + 1}: ${step.title}`}
+                      aria-disabled={isUpcoming || undefined}
                     >
                       {isActive && (
                         <div className="step-nav-active-marker" aria-hidden="true"></div>
