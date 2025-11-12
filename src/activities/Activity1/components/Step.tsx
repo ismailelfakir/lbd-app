@@ -2,15 +2,24 @@ import { useState, useEffect, useCallback } from 'react';
 import CodeBlock from '../../../components/CodeBlock';
 import { useI18n } from '../../../i18n/context';
 
+type StepBlock = 
+  | { type: 'text'; content: string }
+  | { type: 'code'; language?: string; content: string }
+  | { type: 'explain'; content: string }
+  | { type: 'quiz'; question: string; options: string[]; answer: string }
+  | { type: 'action'; content: string };
+
 type StepData = {
   section: 'course' | 'workshop';
   title: string;
-  content: string;
+  meta?: { duration?: string; difficulty?: string; tags?: string[] };
+  blocks?: StepBlock[];
+  // Legacy fields for backward compatibility (deprecated)
+  content?: string;
   code?: string;
   explain?: string;
   quiz?: string | { question: string; options: string[]; answer: string };
   diagram?: string;
-  meta?: { duration?: string; difficulty?: string; tags?: string[] };
   sandbox?: { template?: string; file?: string };
 };
 
@@ -57,9 +66,12 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
   const [feedback, setFeedback] = useState<string | null>(null);
   const [attempts, setAttempts] = useState<number>(0);
 
-  const isQCM = step.quiz && typeof step.quiz === 'object' && 'question' in step.quiz;
+  // Check for quiz in blocks (new structure) or legacy quiz field
+  const quizBlock = step.blocks?.find(b => b.type === 'quiz') as { type: 'quiz'; question: string; options: string[]; answer: string } | undefined;
+  const legacyQuiz = step.quiz && typeof step.quiz === 'object' && 'question' in step.quiz ? step.quiz : null;
+  const quizData = quizBlock || legacyQuiz;
+  const isQCM = !!quizData;
   const maxAttempts = 3;
-  const quizData = (step.quiz as { question: string; options: string[]; answer: string }) || null;
   const isFinalized = !!feedback && (feedback.includes('✅') || attempts >= maxAttempts);
 
   const handleAnswer = useCallback((option: string, isCorrect: boolean) => {
@@ -98,19 +110,19 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
   }, [step.title, showQuiz]);
 
   useEffect(() => {
-    if (!isQCM || !showQuiz) return;
-    const quiz = step.quiz as { question: string; options: string[]; answer: string };
+    if (!isQCM || !showQuiz || !quizData) return;
+    const currentQuizData = quizData; // Store in local variable for TypeScript
     function handleKey(e: KeyboardEvent) {
       const num = parseInt(e.key);
       if (Number.isNaN(num)) return;
-      if (num < 1 || num > quiz.options.length) return;
+      if (num < 1 || num > currentQuizData.options.length) return;
       if (isFinalized) return;
-      const option = quiz.options[num - 1];
-      handleAnswer(option, option === quiz.answer);
+      const option = currentQuizData.options[num - 1];
+      handleAnswer(option, option === currentQuizData.answer);
     }
     window.addEventListener('keydown', handleKey);
     return () => window.removeEventListener('keydown', handleKey);
-  }, [isQCM, step.quiz, handleAnswer, showQuiz, isFinalized]);
+  }, [isQCM, quizData, handleAnswer, showQuiz, isFinalized]);
 
   return (
     <article className="step" role="region" aria-label={step.title}>
@@ -126,39 +138,73 @@ export default function Step({ step, showQuiz, onQuizAnswered }: { step: StepDat
       ) : null}
       {!showQuiz ? (
         <>
-          {renderMarkdown(step.content)}
-          {step.diagram ? (
-            <div className="diagram"><img src={step.diagram} alt="diagram" /></div>
-          ) : null}
-          <CodeBlock code={step.code} />
-          {step.explain ? (
-            <div className="explain-box">
-              <div className="explain-box-header">
-                <svg className="explain-box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                  <path d="M9 21h6"></path>
-                  <path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4.5 3 6"></path>
-                  <path d="M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6"></path>
-                  <path d="M9 15h6"></path>
-                </svg>
-                <h4 className="explain-box-title">{t('explanation')}</h4>
-              </div>
-              <div className="explain-box-content" dangerouslySetInnerHTML={{ __html: formatExplainText(step.explain) }} />
-            </div>
-          ) : null}
-          {step.sandbox?.file ? (
-            <p className="note">{t('toTryLocally')} <code>npx create-next-app@latest --typescript --app</code></p>
-          ) : null}
+          {step.blocks ? (
+            // New blocks structure
+            step.blocks
+              .filter(block => block.type !== 'quiz' && block.type !== 'action')
+              .map((block, idx) => {
+                if (block.type === 'text') {
+                  return <div key={idx}>{renderMarkdown(block.content)}</div>;
+                }
+                if (block.type === 'code') {
+                  return <CodeBlock key={idx} code={block.content} language={block.language} />;
+                }
+                if (block.type === 'explain') {
+                  return (
+                    <div key={idx} className="explain-box">
+                      <div className="explain-box-header">
+                        <svg className="explain-box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                          <path d="M9 21h6"></path>
+                          <path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4.5 3 6"></path>
+                          <path d="M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6"></path>
+                          <path d="M9 15h6"></path>
+                        </svg>
+                        <h4 className="explain-box-title">{t('explanation')}</h4>
+                      </div>
+                      <div className="explain-box-content" dangerouslySetInnerHTML={{ __html: formatExplainText(block.content) }} />
+                    </div>
+                  );
+                }
+                return null;
+              })
+          ) : (
+            // Legacy structure (backward compatibility)
+            <>
+              {step.content && renderMarkdown(step.content)}
+              {step.diagram ? (
+                <div className="diagram"><img src={step.diagram} alt="diagram" /></div>
+              ) : null}
+              {step.code && <CodeBlock code={step.code} />}
+              {step.explain ? (
+                <div className="explain-box">
+                  <div className="explain-box-header">
+                    <svg className="explain-box-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                      <path d="M9 21h6"></path>
+                      <path d="M12 3a6 6 0 0 0-6 6c0 2.5 1.5 4.5 3 6"></path>
+                      <path d="M12 3a6 6 0 0 1 6 6c0 2.5-1.5 4.5-3 6"></path>
+                      <path d="M9 15h6"></path>
+                    </svg>
+                    <h4 className="explain-box-title">{t('explanation')}</h4>
+                  </div>
+                  <div className="explain-box-content" dangerouslySetInnerHTML={{ __html: formatExplainText(step.explain) }} />
+                </div>
+              ) : null}
+              {step.sandbox?.file ? (
+                <p className="note">{t('toTryLocally')} <code>npx create-next-app@latest --typescript --app</code></p>
+              ) : null}
+            </>
+          )}
         </>
       ) : null}
-      {showQuiz && isQCM ? (
+      {showQuiz && isQCM && quizData ? (
         <div className="quiz-box">
-          <h4>{(step.quiz as { question: string; options: string[]; answer: string }).question}</h4>
+          <h4>{quizData.question}</h4>
           <div className="quiz-options">
-            {(step.quiz as { question: string; options: string[]; answer: string }).options.map((opt, idx) => (
+            {quizData.options.map((opt, idx) => (
               <button
                 key={opt}
-                className={`quiz-option ${selected === opt ? 'selected' : ''} ${selected && opt === (step.quiz as { question: string; options: string[]; answer: string }).answer ? 'correct' : ''} ${selected && selected === opt && opt !== (step.quiz as { question: string; options: string[]; answer: string }).answer ? 'incorrect' : ''}`}
-                onClick={() => handleAnswer(opt, opt === (step.quiz as { question: string; options: string[]; answer: string }).answer)}
+                className={`quiz-option ${selected === opt ? 'selected' : ''} ${selected && opt === quizData.answer ? 'correct' : ''} ${selected && selected === opt && opt !== quizData.answer ? 'incorrect' : ''}`}
+                onClick={() => handleAnswer(opt, opt === quizData.answer)}
                 disabled={isFinalized}
                 aria-label={`Option ${idx + 1}: ${opt}`}
               >

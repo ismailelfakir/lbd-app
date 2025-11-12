@@ -2,19 +2,28 @@ import { useMemo, useState, useEffect } from 'react';
 import Step from './components/Step';
 import Sidebar from '../../components/Sidebar';
 import { useI18n } from '../../i18n/context';
-import stepsDataEn from './data/steps_workshop_en.json';
-import stepsDataFr from './data/steps_workshop_fr.json';
+import stepsDataEn from '../../data/steps_en.json';
+import stepsDataFr from '../../data/steps_fr.json';
 import './styles.css';
+
+type StepBlock = 
+  | { type: 'text'; content: string }
+  | { type: 'code'; language?: string; content: string }
+  | { type: 'explain'; content: string }
+  | { type: 'quiz'; question: string; options: string[]; answer: string }
+  | { type: 'action'; content: string };
 
 type StepItem = {
   section: 'course' | 'workshop';
   title: string;
-  content: string;
+  meta?: { duration?: string; difficulty?: string; tags?: string[] };
+  blocks?: StepBlock[];
+  // Legacy fields for backward compatibility (deprecated)
+  content?: string;
   code?: string;
   explain?: string;
   quiz?: string | { question: string; options: string[]; answer: string };
   diagram?: string;
-  meta?: { duration?: string; difficulty?: string; tags?: string[] };
   sandbox?: { template?: string; file?: string };
   action?: string;
 };
@@ -22,7 +31,8 @@ type StepItem = {
 export default function App() {
   const { language, t } = useI18n();
   const steps = useMemo<StepItem[]>(() => {
-    return (language === 'fr' ? stepsDataFr : stepsDataEn) as StepItem[];
+    const allSteps = (language === 'fr' ? stepsDataFr : stepsDataEn) as StepItem[];
+    return allSteps.filter(step => step.section === 'workshop');
   }, [language]);
   const [currentIndex, setCurrentIndex] = useState(() => {
     const saved = localStorage.getItem(`lbd.activity2.step.${language}`);
@@ -50,7 +60,10 @@ export default function App() {
   const total = steps.length;
   const current = steps[currentIndex];
   const isComplete = currentIndex === total - 1;
-  const hasQuiz = current.quiz && (typeof current.quiz === 'object' ? 'question' in current.quiz : true);
+  // Check for quiz in blocks (new structure) or legacy quiz field
+  const hasQuizBlock = current?.blocks?.some(b => b.type === 'quiz');
+  const hasLegacyQuiz = current?.quiz && (typeof current.quiz === 'object' ? 'question' in current.quiz : true);
+  const hasQuiz = hasQuizBlock || hasLegacyQuiz;
 
   function goPrev() {
     if (showQuiz) {

@@ -59,6 +59,8 @@ export default function Sidebar({
 
   // Only show backdrop on mobile when sidebar is expanded
   const showBackdrop = !isCollapsed && isMobile;
+  // Show floating toggle button on mobile when sidebar is collapsed
+  const showFloatingToggle = isCollapsed && isMobile;
 
   return (
     <>
@@ -69,6 +71,19 @@ export default function Sidebar({
           onClick={toggleCollapse}
           aria-hidden="true"
         />
+      )}
+
+      {/* Floating toggle button for mobile when sidebar is collapsed */}
+      {showFloatingToggle && (
+        <button
+          className="sidebar-toggle-float"
+          onClick={toggleCollapse}
+          aria-label={t('expandSidebar')}
+        >
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <polyline points="9 18 15 12 9 6"></polyline>
+          </svg>
+        </button>
       )}
 
       {/* Sidebar */}
@@ -216,6 +231,40 @@ export default function Sidebar({
                 </div>
               </div>
             </div>
+          </div>
+        )}
+
+        {/* Collapsed Steps Navigation */}
+        {isCollapsed && (
+          <div className="sidebar-content-collapsed">
+            <nav className="steps-container-collapsed" aria-label={`${t('steps')} navigation`}>
+              {steps.map((step, index) => {
+                const isActive = index === currentIndex;
+                const isCompleted = index < currentIndex;
+                const isUpcoming = index > currentIndex;
+                
+                return (
+                  <button
+                    key={index}
+                    className={`step-nav-item-collapsed ${isActive ? 'is-active' : ''} ${isCompleted ? 'is-completed' : ''} ${isUpcoming ? 'is-upcoming' : ''}`}
+                    onClick={() => { if (!isUpcoming) onStepChange(index); }}
+                    disabled={isUpcoming}
+                    aria-current={isActive ? 'step' : undefined}
+                    aria-label={`${t('step')} ${index + 1}: ${step.title}`}
+                    aria-disabled={isUpcoming || undefined}
+                    title={step.title}
+                  >
+                    <span className="step-nav-label-collapsed">s{index + 1}</span>
+                    {isCompleted && (
+                      <div className="step-completed-indicator-collapsed" aria-hidden="true"></div>
+                    )}
+                    {isActive && (
+                      <div className="step-nav-active-marker-collapsed" aria-hidden="true"></div>
+                    )}
+                  </button>
+                );
+              })}
+            </nav>
           </div>
         )}
 

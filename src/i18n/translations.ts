@@ -31,7 +31,16 @@ export type TranslationKey =
   | 'switchToLightMode'
   | 'language'
   | 'english'
-  | 'french';
+  | 'french'
+  | 'courses'
+  | 'startLearning'
+  | 'courseDetails'
+  | 'whatYouWillLearn'
+  | 'prerequisites'
+  | 'backToCourses'
+  | 'selectCourse'
+  | 'duration'
+  | 'difficulty';
 
 export const translations: Record<Language, Record<TranslationKey, string>> = {
   en: {
@@ -66,6 +75,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     language: 'Language',
     english: 'English',
     french: 'Français',
+    courses: 'Courses',
+    startLearning: 'Start Learning',
+    courseDetails: 'Course Details',
+    whatYouWillLearn: 'What You Will Learn',
+    prerequisites: 'Prerequisites',
+    backToCourses: 'Back to Courses',
+    selectCourse: 'Select a Course',
+    duration: 'Duration',
+    difficulty: 'Difficulty',
   },
   fr: {
     activities: 'Activités',
@@ -99,6 +117,15 @@ export const translations: Record<Language, Record<TranslationKey, string>> = {
     language: 'Langue',
     english: 'English',
     french: 'Français',
+    courses: 'Cours',
+    startLearning: 'Commencer',
+    courseDetails: 'Détails du cours',
+    whatYouWillLearn: 'Ce que vous allez apprendre',
+    prerequisites: 'Prérequis',
+    backToCourses: 'Retour aux cours',
+    selectCourse: 'Sélectionner un cours',
+    duration: 'Durée',
+    difficulty: 'Difficulté',
   },
 };
 

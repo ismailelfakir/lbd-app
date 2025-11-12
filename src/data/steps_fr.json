@@ -1,0 +1,737 @@
+[
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 1 – Introduction à Next.js",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["vue d'ensemble", "React", "framework"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Bienvenue dans le **cours Fondamentaux de Next.js 14** !"
+      },
+      {
+        "type": "text",
+        "content": "Next.js est un **framework React** puissant créé par **Vercel**. Il aide les développeurs à créer des applications **rapides**, **scalables** et **optimisées pour le référencement (SEO)**, basées sur les standards modernes du web. Ce module vous expliquera *pourquoi* Next.js est important, *comment* il fonctionne et *ce qui le différencie* de React classique."
+      },
+      {
+        "type": "text",
+        "content": "Next.js étend React en ajoutant un système de routage, de rendu et des optimisations de performance prêtes à l'emploi."
+      },
+      {
+        "type": "quiz",
+        "question": "Qui a créé et maintient le framework Next.js ?",
+        "options": ["Google", "Vercel", "Meta", "Microsoft"],
+        "answer": "Vercel"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 2 – Préparer l'environnement",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["Node.js", "configuration"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Avant de commencer avec Next.js, assurez-vous que votre environnement est prêt :\n\n1️⃣ Installez **Node.js v18+ (LTS)** depuis [nodejs.org](https://nodejs.org)\n2️⃣ Utilisez un éditeur moderne comme **VS Code**\n3️⃣ Vérifiez vos versions :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "node -v\nnpm -v"
+      },
+      {
+        "type": "explain",
+        "content": "Next.js nécessite Node.js version 18 ou supérieure. npm (inclus avec Node.js) sert à installer les dépendances."
+      },
+      {
+        "type": "quiz",
+        "question": "Quelle commande permet de vérifier votre version de Node.js ?",
+        "options": ["npm -v", "node --check", "node -v", "ver node"],
+        "answer": "node -v"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 3 – Créer un projet Next.js",
+    "meta": { "duration": "4 min", "difficulty": "Facile", "tags": ["create-next-app", "démarrage"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Pour initialiser une nouvelle application Next.js, exécutez la commande suivante dans votre terminal :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "npx create-next-app@latest next-theory --typescript --app\ncd next-theory\nnpm run dev"
+      },
+      {
+        "type": "explain",
+        "content": "Cette commande crée un projet Next.js complet avec TypeScript et l'**App Router** activé. Le flag `--typescript` configure TypeScript, et `--app` active le nouveau App Router. Ouvrez **http://localhost:3000** pour voir votre application en cours d'exécution."
+      },
+      {
+        "type": "quiz",
+        "question": "Quel indicateur active l'App Router lors de la création d'un projet Next.js ?",
+        "options": ["--pages", "--router", "--app", "--client"],
+        "answer": "--app"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 4 – Explorer la structure du projet",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["structure", "App Router"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Une fois le projet créé, votre arborescence devrait ressembler à ceci :"
+      },
+      {
+        "type": "code",
+        "language": "plaintext",
+        "content": "app/\n  layout.tsx\n  page.tsx\n  globals.css\npublic/\n  favicon.ico\ncomponents/\n  Header.tsx\npackage.json"
+      },
+      {
+        "type": "explain",
+        "content": "Le dossier **app/** définit vos routes et vos layouts. Chaque sous-dossier contenant un fichier `page.tsx` devient automatiquement une route. Le fichier `layout.tsx` enveloppe toutes les pages de ce répertoire, et `page.tsx` est le composant de page réel."
+      },
+      {
+        "type": "quiz",
+        "question": "Quel dossier définit les routes dans l'App Router ?",
+        "options": ["src/", "pages/", "app/", "routes/"],
+        "answer": "app/"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 5 – Comprendre les modes de rendu",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["SSR", "SSG", "ISR", "CSR"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Next.js offre plusieurs stratégies de rendu selon vos besoins :\n\n1️⃣ **SSR (Server-Side Rendering)** : le contenu est rendu à chaque requête.\n\n2️⃣ **SSG (Static Site Generation)** : les pages sont générées une seule fois à la compilation.\n\n3️⃣ **ISR (Incremental Static Regeneration)** : les pages statiques sont régénérées en arrière-plan.\n\n4️⃣ **CSR (Client-Side Rendering)** : rendu classique côté navigateur."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "export default async function ServerPage() {\n  const res = await fetch('https://api.quotable.io/random', { cache: 'no-store' })\n  const data = await res.json()\n  return <p>Citation aléatoire : {data.content}</p>\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Cette page récupère de nouvelles données à chaque requête (`cache: 'no-store'`), démontrant le rendu côté serveur dans Next.js. Le mot-clé `async` permet au composant de récupérer des données sur le serveur avant le rendu, et `cache: 'no-store'` garantit que les données sont toujours fraîches."
+      },
+      {
+        "type": "quiz",
+        "question": "Quel mode de rendu génère le HTML à chaque requête ?",
+        "options": ["SSG", "ISR", "CSR", "SSR"],
+        "answer": "SSR"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 6 – Composants Serveur et Client",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["server components", "client components"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Next.js 13+ introduit deux types de composants :\n\n- **Composants Serveur** (par défaut) : exécutés sur le serveur, sans JavaScript côté client.\n- **Composants Client** : déclarés avec `'use client'` en haut du fichier, ils permettent l'interactivité (hooks, événements, formulaires…)."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "'use client'\nimport { useState } from 'react'\n\nexport default function Compteur() {\n  const [count, setCount] = useState(0)\n  return <button onClick={() => setCount(count + 1)}>Cliqué {count} fois</button>\n}"
+      },
+      {
+        "type": "explain",
+        "content": "La directive `'use client'` en haut du fichier rend un composant interactif et lui permet d'utiliser les hooks React comme `useState`. Sans cette directive, les composants sont des Composants Serveur par défaut et ne peuvent pas utiliser les APIs du navigateur ou les hooks React."
+      },
+      {
+        "type": "quiz",
+        "question": "Quelle directive permet de rendre un composant interactif ?",
+        "options": ["'client only'", "'interactive'", "'use client'", "'client mode'"],
+        "answer": "'use client'"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 7 – Routage basé sur les fichiers",
+    "meta": { "duration": "4 min", "difficulty": "Intermédiaire", "tags": ["routing", "App Router"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Next.js crée automatiquement les routes à partir des fichiers présents dans le dossier `app/`. Voici comment créer des routes statiques et dynamiques :"
+      },
+      {
+        "type": "code",
+        "language": "plaintext",
+        "content": "app/\n  page.tsx          // Page d'accueil → '/'\n  about/page.tsx    // Page À propos → '/about'\n  blog/[id]/page.tsx // Route dynamique → '/blog/:id'"
+      },
+      {
+        "type": "explain",
+        "content": "Chaque dossier contenant un fichier `page.tsx` devient une route. Les segments dynamiques comme `[id]` capturent automatiquement les paramètres d'URL. Vous pouvez accéder au paramètre `id` dans votre composant en utilisant le hook `useParams` de Next.js ou en le recevant comme prop dans les Composants Serveur."
+      },
+      {
+        "type": "quiz",
+        "question": "Quelle syntaxe de nommage définit une route dynamique ?",
+        "options": ["{id}", "[id]", ":id", "<id>"],
+        "answer": "[id]"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 8 – Exemple de récupération de données",
+    "meta": { "duration": "4 min", "difficulty": "Intermédiaire", "tags": ["data fetching", "server side"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Les composants Serveur peuvent récupérer des données directement avec `async/await`. Exemple :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "export default async function Utilisateurs() {\n  const res = await fetch('https://jsonplaceholder.typicode.com/users')\n  const users = await res.json()\n  return (\n    <ul>\n      {users.slice(0, 3).map(u => <li key={u.id}>{u.name}</li>)}\n    </ul>\n  )\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Parce que cette fonction s'exécute sur le serveur, les données sont récupérées de manière sécurisée avant d'envoyer le HTML au navigateur. Cela améliore les performances, le SEO et la sécurité puisque les clés API et les opérations sensibles restent sur le serveur. Le mot-clé `async` est requis pour les Composants Serveur qui récupèrent des données."
+      },
+      {
+        "type": "quiz",
+        "question": "Dans quel type de composant peut-on utiliser directement async/await ?",
+        "options": ["Composants Client", "Composants Serveur", "Les deux", "Aucun"],
+        "answer": "Composants Serveur"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 9 – Créer une route API",
+    "meta": { "duration": "4 min", "difficulty": "Intermédiaire", "tags": ["API", "backend"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Next.js vous permet de créer des routes API internes pour gérer les données ou les requêtes.\n\nVoici un exemple de route API simple :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "// app/api/hello/route.ts\nexport async function GET() {\n  return Response.json({ message: 'Bonjour depuis la route API !' })\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Cela crée un point d'accès à `/api/hello`. Le fichier doit être nommé `route.ts` (ou `route.js`) et exporter des fonctions de méthodes HTTP comme `GET`, `POST`, `PUT` ou `DELETE`. Vous pouvez ajouter plusieurs méthodes dans le même fichier pour créer une API REST complète. Ces routes s'exécutent sur le serveur et peuvent accéder aux variables d'environnement de manière sécurisée."
+      },
+      {
+        "type": "quiz",
+        "question": "Où sont définies les routes API dans l'App Router ?",
+        "options": ["pages/api/", "app/api/", "src/api/", "server/routes/"],
+        "answer": "app/api/"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 10 – Optimisation et déploiement",
+    "meta": { "duration": "4 min", "difficulty": "Intermédiaire", "tags": ["optimisation", "déploiement"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Next.js inclut des outils intégrés d'optimisation pour les images, les polices et le SEO. Exemple :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "import Image from 'next/image'\n\nexport default function Hero() {\n  return <Image src=\"/hero.png\" alt=\"Hero\" width={800} height={400} />\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Le composant `next/image` optimise automatiquement les images pour différents appareils et tailles d'écran. Il utilise le chargement différé, sert des formats modernes comme WebP lorsqu'ils sont supportés, et empêche le décalage de mise en page. Fournissez toujours `width` et `height` pour une optimisation appropriée."
+      },
+      {
+        "type": "text",
+        "content": "Vous pouvez déployer votre projet sur **Vercel** en poussant votre code sur **GitHub** puis en le connectant sur [vercel.com](https://vercel.com)."
+      },
+      {
+        "type": "quiz",
+        "question": "Quel composant optimise automatiquement les images dans Next.js ?",
+        "options": ["<img>", "<Picture>", "<Image>", "<NextImg>"],
+        "answer": "<Image>"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "course",
+    "title": "Étape 11 – Réflexion et passage au Workshop",
+    "meta": { "duration": "2 min", "difficulty": "Application", "tags": ["réflexion", "transition"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Félicitations ! Vous comprenez désormais les **concepts essentiels de Next.js** — rendu, routage, composants, récupération de données et optimisation."
+      },
+      {
+        "type": "text",
+        "content": "Il est maintenant temps d'appliquer vos connaissances en pratique."
+      },
+      {
+        "type": "action",
+        "content": "start-workshop"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 1 – Présentation du projet",
+    "meta": { "duration": "2 min", "difficulty": "Intro", "tags": ["vue d'ensemble", "Next.js 14", "installation"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Bienvenue dans l'**Atelier Next.js 14 + TypeScript – Application Professionnelle** !"
+      },
+      {
+        "type": "text",
+        "content": "Dans cette activité pratique, vous allez construire une **Application de Gestion de Tâches** complète en utilisant tous les concepts du cours théorique :\n\n- **Composants Serveur** pour la récupération de données\n- **Composants Client** pour l'interactivité\n- **Routage basé sur les fichiers** avec l'App Router\n- **Routes API** pour les fonctionnalités backend\n- **Optimisation** avec le composant Image de Next.js\n- **Styling** avec Tailwind CSS\n- **Gestion d'état** avec les hooks React\n- **Persistance des données** avec localStorage"
+      },
+      {
+        "type": "text",
+        "content": "À la fin, vous aurez une application prête pour la production qui démontre les patterns Next.js du monde réel. Commençons à construire !"
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 2 – Préparer l'environnement",
+    "meta": { "duration": "3 min", "difficulty": "Intro" },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Avant de commencer, assurez-vous que votre environnement de développement est prêt :\n\n1️⃣ Installez **Node.js v18+ (LTS)** depuis [nodejs.org](https://nodejs.org)\n2️⃣ Utilisez un éditeur moderne comme **VS Code** avec les extensions :\n   - ESLint\n   - Prettier\n   - Tailwind CSS IntelliSense\n3️⃣ Vérifiez vos versions :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "node -v\nnpm -v"
+      },
+      {
+        "type": "explain",
+        "content": "Utilisez toujours une version LTS (Long-Term Support) pour garantir la stabilité et la compatibilité. Node.js v18+ est requis pour les fonctionnalités Next.js 14 comme les Composants Serveur et l'App Router."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 3 – Créer un nouveau projet",
+    "meta": { "duration": "4 min", "difficulty": "Facile" },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Créons un nouveau projet Next.js avec TypeScript et Tailwind CSS :\n\nOuvrez votre terminal dans le répertoire de votre choix et exécutez :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "npx create-next-app@latest task-manager --typescript --eslint --tailwind --app --src-dir=false\ncd task-manager\nnpm run dev"
+      },
+      {
+        "type": "explain",
+        "content": "Les flags que nous utilisons :\n- `--typescript` : Active le support TypeScript\n- `--eslint` : Configure ESLint pour la qualité du code\n- `--tailwind` : Installe et configure Tailwind CSS\n- `--app` : Utilise l'App Router (Next.js 13+)\n- `--src-dir=false` : Garde les fichiers à la racine pour la simplicité"
+      },
+      {
+        "type": "text",
+        "content": "Visitez `http://localhost:3000` pour confirmer que tout fonctionne. Vous devriez voir la page d'accueil par défaut de Next.js."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 4 – Comprendre la structure du projet",
+    "meta": { "duration": "3 min", "difficulty": "Facile" },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Examinons la structure du projet créée par `create-next-app` :"
+      },
+      {
+        "type": "code",
+        "language": "plaintext",
+        "content": "task-manager/\n  app/\n    layout.tsx      # Layout racine (enveloppe toutes les pages)\n    page.tsx         # Page d'accueil (/)\n    globals.css      # Styles globaux\n  components/        # Composants réutilisables (nous le créerons)\n  public/            # Assets statiques\n  package.json       # Dépendances\n  tsconfig.json      # Configuration TypeScript\n  tailwind.config.js # Configuration Tailwind CSS"
+      },
+      {
+        "type": "explain",
+        "content": "Le dossier **app/** utilise le pattern App Router. Chaque fichier `page.tsx` devient automatiquement une route. Le fichier `layout.tsx` enveloppe toutes les pages de ce répertoire, vous permettant de partager l'UI et l'état entre les routes. Nous créerons un dossier `components/` pour les composants UI réutilisables."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 5 – Créer le composant Liste de Tâches (Composant Client)",
+    "meta": { "duration": "10 min", "difficulty": "Intermédiaire", "tags": ["client components", "React hooks", "state"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Construisons maintenant notre premier **Composant Client** avec interactivité. Cela démontre la directive `'use client'` du cours théorique.\n\nD'abord, créez le dossier `components` à la racine de votre projet, puis créez **`TaskList.tsx`** :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "mkdir components\ntouch components/TaskList.tsx"
+      },
+      {
+        "type": "text",
+        "content": "Maintenant, construisons un composant de gestion de tâches professionnel avec l'état React :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "'use client'\n\nimport { useState } from 'react'\n\ntype Task = {\n  id: string\n  text: string\n  completed: boolean\n  createdAt: Date\n}\n\nexport default function TaskList() {\n  const [tasks, setTasks] = useState<Task[]>([])\n  const [input, setInput] = useState('')\n\n  const addTask = () => {\n    if (!input.trim()) return\n    const newTask: Task = {\n      id: Date.now().toString(),\n      text: input.trim(),\n      completed: false,\n      createdAt: new Date()\n    }\n    setTasks([...tasks, newTask])\n    setInput('')\n  }\n\n  const toggleTask = (id: string) => {\n    setTasks(tasks.map(task => \n      task.id === id ? { ...task, completed: !task.completed } : task\n    ))\n  }\n\n  const deleteTask = (id: string) => {\n    setTasks(tasks.filter(task => task.id !== id))\n  }\n\n  return (\n    <div className=\"w-full max-w-2xl mx-auto p-6\">\n      <h1 className=\"text-3xl font-bold mb-6 text-gray-900 dark:text-white\">\n        Gestionnaire de Tâches\n      </h1>\n      \n      <div className=\"flex gap-2 mb-6\">\n        <input\n          type=\"text\"\n          value={input}\n          onChange={(e) => setInput(e.target.value)}\n          onKeyPress={(e) => e.key === 'Enter' && addTask()}\n          placeholder=\"Ajouter une nouvelle tâche...\"\n          className=\"flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white\"\n        />\n        <button\n          onClick={addTask}\n          className=\"px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold\"\n        >\n          Ajouter\n        </button>\n      </div>\n\n      <div className=\"space-y-2\">\n        {tasks.length === 0 ? (\n          <p className=\"text-gray-500 dark:text-gray-400 text-center py-8\">\n            Aucune tâche pour le moment. Ajoutez-en une ci-dessus !\n          </p>\n        ) : (\n          tasks.map((task) => (\n            <div\n              key={task.id}\n              className=\"flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition\"\n            >\n              <input\n                type=\"checkbox\"\n                checked={task.completed}\n                onChange={() => toggleTask(task.id)}\n                className=\"w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500\"\n              />\n              <span\n                className={`flex-1 ${\n                  task.completed\n                    ? 'line-through text-gray-400 dark:text-gray-500'\n                    : 'text-gray-900 dark:text-white'\n                }`}\n              >\n                {task.text}\n              </span>\n              <button\n                onClick={() => deleteTask(task.id)}\n                className=\"px-3 py-1 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition\"\n              >\n                Supprimer\n              </button>\n            </div>\n          ))\n        )}\n      </div>\n    </div>\n  )\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Ce composant utilise la directive `'use client'`, ce qui en fait un Composant Client. Il utilise les hooks React (`useState`) pour gérer l'état local. Le composant gère l'ajout, le basculement de complétion et la suppression de tâches. Remarquez comment nous utilisons les types TypeScript pour une meilleure sécurité du code."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 6 – Afficher le composant (Composant Serveur)",
+    "meta": { "duration": "3 min", "difficulty": "Facile", "tags": ["server components", "routing"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Utilisons maintenant un **Composant Serveur** (par défaut dans Next.js) pour afficher notre Composant Client. Cela démontre le pattern Composant Serveur/Client du cours théorique.\n\nOuvrez **`app/page.tsx`** et mettez-le à jour :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "import TaskList from '../components/TaskList'\n\nexport default function Page() {\n  return (\n    <main className=\"min-h-screen bg-gray-50 dark:bg-gray-900 py-12\">\n      <TaskList />\n    </main>\n  )\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Ce composant `Page` est un **Composant Serveur** par défaut (pas de directive `'use client'`). Il peut importer et rendre des Composants Client comme `TaskList`. Les Composants Serveur sont excellents pour les layouts, le contenu statique et la récupération de données. Le fichier `app/page.tsx` devient automatiquement la route `/` grâce au routage basé sur les fichiers."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 7 – Ajouter la persistance des données avec localStorage",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["useEffect", "localStorage", "persistence"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Ajoutons la persistance des données pour que les tâches survivent aux rafraîchissements de page. Nous utiliserons `useEffect` pour synchroniser avec `localStorage`. Mettez à jour votre composant `TaskList.tsx` :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "'use client'\n\nimport { useState, useEffect } from 'react'\n\ntype Task = {\n  id: string\n  text: string\n  completed: boolean\n  createdAt: string\n}\n\nexport default function TaskList() {\n  const [tasks, setTasks] = useState<Task[]>([])\n  const [input, setInput] = useState('')\n\n  // Charger les tâches depuis localStorage au montage\n  useEffect(() => {\n    const saved = localStorage.getItem('tasks')\n    if (saved) {\n      try {\n        setTasks(JSON.parse(saved))\n      } catch (e) {\n        console.error('Échec du chargement des tâches:', e)\n      }\n    }\n  }, [])\n\n  // Sauvegarder les tâches dans localStorage à chaque changement\n  useEffect(() => {\n    localStorage.setItem('tasks', JSON.stringify(tasks))\n  }, [tasks])\n\n  const addTask = () => {\n    if (!input.trim()) return\n    const newTask: Task = {\n      id: Date.now().toString(),\n      text: input.trim(),\n      completed: false,\n      createdAt: new Date().toISOString()\n    }\n    setTasks([...tasks, newTask])\n    setInput('')\n  }\n\n  const toggleTask = (id: string) => {\n    setTasks(tasks.map(task => \n      task.id === id ? { ...task, completed: !task.completed } : task\n    ))\n  }\n\n  const deleteTask = (id: string) => {\n    setTasks(tasks.filter(task => task.id !== id))\n  }\n\n  return (\n    <div className=\"w-full max-w-2xl mx-auto p-6\">\n      <h1 className=\"text-3xl font-bold mb-6 text-gray-900 dark:text-white\">\n        Gestionnaire de Tâches\n      </h1>\n      \n      <div className=\"flex gap-2 mb-6\">\n        <input\n          type=\"text\"\n          value={input}\n          onChange={(e) => setInput(e.target.value)}\n          onKeyPress={(e) => e.key === 'Enter' && addTask()}\n          placeholder=\"Ajouter une nouvelle tâche...\"\n          className=\"flex-1 px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-indigo-500 dark:bg-gray-800 dark:border-gray-600 dark:text-white\"\n        />\n        <button\n          onClick={addTask}\n          className=\"px-6 py-2 bg-indigo-600 text-white rounded-lg hover:bg-indigo-700 transition font-semibold\"\n        >\n          Ajouter\n        </button>\n      </div>\n\n      <div className=\"space-y-2\">\n        {tasks.length === 0 ? (\n          <p className=\"text-gray-500 dark:text-gray-400 text-center py-8\">\n            Aucune tâche pour le moment. Ajoutez-en une ci-dessus !\n          </p>\n        ) : (\n          tasks.map((task) => (\n            <div\n              key={task.id}\n              className=\"flex items-center gap-3 p-4 bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-lg hover:shadow-md transition\"\n            >\n              <input\n                type=\"checkbox\"\n                checked={task.completed}\n                onChange={() => toggleTask(task.id)}\n                className=\"w-5 h-5 text-indigo-600 rounded focus:ring-indigo-500\"\n              />\n              <span\n                className={`flex-1 ${\n                  task.completed\n                    ? 'line-through text-gray-400 dark:text-gray-500'\n                    : 'text-gray-900 dark:text-white'\n                }`}\n              >\n                {task.text}\n              </span>\n              <button\n                onClick={() => deleteTask(task.id)}\n                className=\"px-3 py-1 text-red-600 hover:bg-red-50 dark:hover:bg-red-900/20 rounded transition\"\n              >\n                Supprimer\n              </button>\n            </div>\n          ))\n        )}\n      </div>\n    </div>\n  )\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Nous utilisons deux hooks `useEffect` : un pour charger les tâches depuis `localStorage` lorsque le composant est monté (tableau de dépendances vide), et un autre pour sauvegarder les tâches chaque fois que l'état `tasks` change. Cela garantit que les données persistent lors des rafraîchissements de page. Note : `localStorage` ne fonctionne que dans le navigateur, c'est pourquoi cela doit être un Composant Client."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 8 – Créer une route API",
+    "meta": { "duration": "8 min", "difficulty": "Intermédiaire", "tags": ["API routes", "backend", "REST"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Créons une route API pour démontrer les fonctionnalités backend. Cela applique le concept des Routes API du cours théorique.\n\nCréez **`app/api/tasks/route.ts`** :"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "mkdir -p app/api/tasks\ntouch app/api/tasks/route.ts"
+      },
+      {
+        "type": "text",
+        "content": "Implémentons maintenant une API REST simple pour les tâches :"
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "import { NextResponse } from 'next/server'\n\n// Stockage en mémoire (en production, utilisez une base de données)\nlet tasks: Array<{\n  id: string\n  text: string\n  completed: boolean\n  createdAt: string\n}> = []\n\nexport async function GET() {\n  return NextResponse.json({ tasks })\n}\n\nexport async function POST(request: Request) {\n  try {\n    const body = await request.json()\n    const { text } = body\n    \n    if (!text || typeof text !== 'string') {\n      return NextResponse.json(\n        { error: 'Le texte est requis' },\n        { status: 400 }\n      )\n    }\n    \n    const newTask = {\n      id: Date.now().toString(),\n      text: text.trim(),\n      completed: false,\n      createdAt: new Date().toISOString()\n    }\n    \n    tasks.push(newTask)\n    return NextResponse.json({ task: newTask }, { status: 201 })\n  } catch (error) {\n    return NextResponse.json(\n      { error: 'Requête invalide' },\n      { status: 400 }\n    )\n  }\n}\n\nexport async function DELETE(request: Request) {\n  try {\n    const { searchParams } = new URL(request.url)\n    const id = searchParams.get('id')\n    \n    if (!id) {\n      return NextResponse.json(\n        { error: 'L\\'ID de la tâche est requis' },\n        { status: 400 }\n      )\n    }\n    \n    tasks = tasks.filter(task => task.id !== id)\n    return NextResponse.json({ success: true })\n  } catch (error) {\n    return NextResponse.json(\n      { error: 'Requête invalide' },\n      { status: 400 }\n    )\n  }\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Cette route API démontre les patterns RESTful :\n- `GET /api/tasks` - Récupérer toutes les tâches\n- `POST /api/tasks` - Créer une nouvelle tâche\n- `DELETE /api/tasks?id=...` - Supprimer une tâche\n\nChaque méthode HTTP est exportée comme une fonction. Le fichier de route doit être nommé `route.ts` (ou `route.js`) dans l'App Router. En production, vous connecteriez cela à une base de données au lieu d'utiliser le stockage en mémoire."
+      }
+    ]
+  },
+  {
+    "courseId": "nextjs-fundamentals",
+    "section": "workshop",
+    "title": "Étape 9 – Déployer sur Vercel",
+    "meta": { "duration": "5 min", "difficulty": "Facile", "tags": ["deployment", "Vercel", "production"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Félicitations ! Vous avez construit une application Next.js complète. Déployons-la maintenant en production en utilisant Vercel (les créateurs de Next.js)."
+      },
+      {
+        "type": "text",
+        "content": "**Étapes pour déployer :**\n\n1️⃣ Poussez votre code sur GitHub :\n   - Créez un nouveau dépôt sur GitHub\n   - Initialisez git et poussez votre code"
+      },
+      {
+        "type": "code",
+        "language": "bash",
+        "content": "git init\ngit add .\ngit commit -m \"Commit initial : application Gestionnaire de Tâches\"\ngit branch -M main\ngit remote add origin https://github.com/VOTRE_NOM_UTILISATEUR/task-manager.git\ngit push -u origin main"
+      },
+      {
+        "type": "text",
+        "content": "2️⃣ Déployez sur Vercel :\n   - Allez sur [vercel.com](https://vercel.com)\n   - Connectez-vous avec GitHub\n   - Cliquez sur \"New Project\"\n   - Importez votre dépôt\n   - Vercel détectera automatiquement Next.js et déploiera !"
+      },
+      {
+        "type": "explain",
+        "content": "Vercel fournit des déploiements automatiques, des URLs de prévisualisation pour les pull requests, et une distribution CDN mondiale. Votre application sera en ligne à une URL comme `votre-app.vercel.app`. Vercel gère également les variables d'environnement, les domaines personnalisés et les analytics."
+      },
+      {
+        "type": "text",
+        "content": "**Ce que vous avez appris :**\n\n✅ Composants Serveur vs Composants Client\n✅ Routage basé sur les fichiers avec App Router\n✅ Hooks React (useState, useEffect)\n✅ Routes API pour les fonctionnalités backend\n✅ TypeScript pour la sécurité des types\n✅ Tailwind CSS pour le styling\n✅ Persistance des données avec localStorage\n✅ Déploiement en production\n\nVous avez complété le parcours d'apprentissage Next.js complet de la théorie à la pratique !"
+      }
+    ]
+  },
+  {
+    "courseId": "react-fundamentals",
+    "section": "course",
+    "title": "Étape 1 – Introduction à React",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["vue d'ensemble", "React", "JavaScript"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Bienvenue dans le **cours Fondamentaux de React** !"
+      },
+      {
+        "type": "text",
+        "content": "React est une bibliothèque JavaScript populaire pour créer des interfaces utilisateur, créée par Facebook. Elle vous permet de créer des composants réutilisables et de construire des applications web dynamiques."
+      },
+      {
+        "type": "text",
+        "content": "Dans ce cours, vous apprendrez les concepts fondamentaux de React, notamment les composants, les props, l'état et les hooks."
+      },
+      {
+        "type": "quiz",
+        "question": "Qui a créé React ?",
+        "options": ["Google", "Facebook", "Microsoft", "Apple"],
+        "answer": "Facebook"
+      }
+    ]
+  },
+  {
+    "courseId": "react-fundamentals",
+    "section": "course",
+    "title": "Étape 2 – Composants et JSX",
+    "meta": { "duration": "4 min", "difficulty": "Facile", "tags": ["composants", "JSX"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Les composants React sont les éléments de base des applications React. Ils vous permettent de diviser l'interface utilisateur en éléments réutilisables."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "function Welcome() {\n  return <h1>Bonjour, React !</h1>;\n}\n\nexport default Welcome;"
+      },
+      {
+        "type": "explain",
+        "content": "Ceci est un composant React simple. JSX vous permet d'écrire une syntaxe similaire au HTML en JavaScript. Le composant retourne du JSX que React rendra dans le DOM."
+      }
+    ]
+  },
+  {
+    "courseId": "react-fundamentals",
+    "section": "course",
+    "title": "Étape 3 – Props",
+    "meta": { "duration": "4 min", "difficulty": "Facile", "tags": ["props", "passage de données"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Les props (abréviation de propriétés) vous permettent de passer des données des composants parents aux composants enfants."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "function Greeting({ name }) {\n  return <h1>Bonjour, {name} !</h1>;\n}\n\nfunction App() {\n  return <Greeting name=\"Alice\" />;\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Les props sont en lecture seule. Elles circulent du parent vers l'enfant, rendant les composants réutilisables avec différentes données."
+      }
+    ]
+  },
+  {
+    "courseId": "react-fundamentals",
+    "section": "course",
+    "title": "Étape 4 – État avec useState",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["état", "hooks", "useState"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "L'état permet aux composants de se souvenir et de mettre à jour des informations. Le hook `useState` est le moyen le plus courant d'ajouter un état aux composants fonctionnels."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "import { useState } from 'react';\n\nfunction Counter() {\n  const [count, setCount] = useState(0);\n\n  return (\n    <div>\n      <p>Compteur : {count}</p>\n      <button onClick={() => setCount(count + 1)}>\n        Incrémenter\n      </button>\n    </div>\n  );\n}"
+      },
+      {
+        "type": "explain",
+        "content": "`useState` retourne un tableau avec deux éléments : la valeur actuelle de l'état et une fonction pour la mettre à jour. Lorsque vous appelez la fonction de mise à jour, React re-rend le composant avec le nouvel état."
+      }
+    ]
+  },
+  {
+    "courseId": "react-fundamentals",
+    "section": "course",
+    "title": "Étape 5 – Hook useEffect",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["hooks", "useEffect", "effets de bord"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Le hook `useEffect` vous permet d'effectuer des effets de bord dans les composants fonctionnels, comme récupérer des données ou mettre à jour le titre du document."
+      },
+      {
+        "type": "code",
+        "language": "jsx",
+        "content": "import { useState, useEffect } from 'react';\n\nfunction UserProfile({ userId }) {\n  const [user, setUser] = useState(null);\n\n  useEffect(() => {\n    fetch(`/api/users/${userId}`)\n      .then(res => res.json())\n      .then(data => setUser(data));\n  }, [userId]);\n\n  if (!user) return <div>Chargement...</div>;\n  return <div>{user.name}</div>;\n}"
+      },
+      {
+        "type": "explain",
+        "content": "`useEffect` s'exécute après chaque rendu par défaut. Le tableau de dépendances `[userId]` garantit que l'effet ne s'exécute que lorsque `userId` change. Un tableau vide `[]` signifie que l'effet s'exécute une seule fois au montage."
+      }
+    ]
+  },
+  {
+    "courseId": "typescript-basics",
+    "section": "course",
+    "title": "Étape 1 – Introduction à TypeScript",
+    "meta": { "duration": "3 min", "difficulty": "Intro", "tags": ["vue d'ensemble", "TypeScript", "types"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Bienvenue dans le **cours Bases de TypeScript** !"
+      },
+      {
+        "type": "text",
+        "content": "TypeScript est un sur-ensemble typé de JavaScript qui se compile en JavaScript pur. Il ajoute une vérification de types statique pour aider à détecter les erreurs tôt et améliorer la qualité du code."
+      },
+      {
+        "type": "text",
+        "content": "TypeScript vous aide à écrire du code plus sûr et plus maintenable en détectant les bugs avant qu'ils n'atteignent la production."
+      },
+      {
+        "type": "quiz",
+        "question": "Qu'est-ce que TypeScript ?",
+        "options": ["Un nouveau langage de programmation", "Un sur-ensemble typé de JavaScript", "Un framework", "Une bibliothèque"],
+        "answer": "Un sur-ensemble typé de JavaScript"
+      }
+    ]
+  },
+  {
+    "courseId": "typescript-basics",
+    "section": "course",
+    "title": "Étape 2 – Types de base",
+    "meta": { "duration": "4 min", "difficulty": "Facile", "tags": ["types", "annotations"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "TypeScript fournit plusieurs types de base. Vous pouvez annoter les variables avec des types pour assurer la sécurité des types."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "let name: string = \"Alice\";\nlet age: number = 30;\nlet isActive: boolean = true;\nlet items: string[] = [\"pomme\", \"banane\"];\n\n// Inférence de type - TypeScript peut inférer les types\nlet count = 10; // TypeScript sait que c'est un nombre"
+      },
+      {
+        "type": "explain",
+        "content": "Les annotations de type sont optionnelles dans de nombreux cas car TypeScript peut inférer les types à partir des valeurs que vous assignez. Cependant, les annotations explicites rendent votre code plus lisible et détectent les erreurs plus tôt."
+      }
+    ]
+  },
+  {
+    "courseId": "typescript-basics",
+    "section": "course",
+    "title": "Étape 3 – Interfaces",
+    "meta": { "duration": "5 min", "difficulty": "Facile", "tags": ["interfaces", "objets"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Les interfaces définissent la forme des objets. C'est un moyen puissant de décrire la structure des données."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "interface User {\n  name: string;\n  age: number;\n  email?: string; // Propriété optionnelle\n}\n\nfunction greetUser(user: User) {\n  console.log(`Bonjour, ${user.name} !`);\n}\n\nconst alice: User = {\n  name: \"Alice\",\n  age: 30\n};"
+      },
+      {
+        "type": "explain",
+        "content": "Les interfaces aident à garantir que les objets ont la structure correcte. Le `?` rend une propriété optionnelle. TypeScript détectera les erreurs si vous essayez d'utiliser une propriété qui n'existe pas ou qui a le mauvais type."
+      }
+    ]
+  },
+  {
+    "courseId": "typescript-basics",
+    "section": "course",
+    "title": "Étape 4 – Fonctions et types",
+    "meta": { "duration": "5 min", "difficulty": "Intermédiaire", "tags": ["fonctions", "annotations de type"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Vous pouvez ajouter des annotations de type aux paramètres de fonction et aux types de retour pour assurer la sécurité des types."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "function add(a: number, b: number): number {\n  return a + b;\n}\n\n// Fonction fléchée avec types\nconst multiply = (x: number, y: number): number => {\n  return x * y;\n};\n\n// Fonction qui ne retourne rien\nfunction logMessage(message: string): void {\n  console.log(message);\n}"
+      },
+      {
+        "type": "explain",
+        "content": "Les annotations de type sur les fonctions aident à détecter les erreurs lors de l'appel de fonctions avec de mauvais types d'arguments ou lorsque les fonctions retournent des types inattendus. Le type `void` est utilisé pour les fonctions qui ne retournent pas de valeur."
+      }
+    ]
+  },
+  {
+    "courseId": "typescript-basics",
+    "section": "course",
+    "title": "Étape 5 – Génériques",
+    "meta": { "duration": "6 min", "difficulty": "Intermédiaire", "tags": ["génériques", "réutilisabilité"] },
+    "blocks": [
+      {
+        "type": "text",
+        "content": "Les génériques vous permettent de créer des composants réutilisables qui fonctionnent avec plusieurs types. Ce sont comme des variables pour les types."
+      },
+      {
+        "type": "code",
+        "language": "typescript",
+        "content": "function identity<T>(arg: T): T {\n  return arg;\n}\n\nlet output1 = identity<string>(\"bonjour\");\nlet output2 = identity<number>(42);\n\n// Interface générique\ninterface Container<T> {\n  value: T;\n}\n\nconst stringContainer: Container<string> = { value: \"bonjour\" };\nconst numberContainer: Container<number> = { value: 42 };"
+      },
+      {
+        "type": "explain",
+        "content": "Les génériques offrent de la flexibilité tout en maintenant la sécurité des types. Le `<T>` est un paramètre de type qui peut être remplacé par n'importe quel type lors de l'utilisation de la fonction ou de l'interface. Cela vous permet d'écrire du code qui fonctionne avec différents types sans perdre les informations de type."
+      }
+    ]
+  }
+]

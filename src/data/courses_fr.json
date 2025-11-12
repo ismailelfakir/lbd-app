@@ -1,0 +1,75 @@
+[
+  {
+    "id": "nextjs-fundamentals",
+    "title": "Fondamentaux de Next.js 14",
+    "description": "Apprenez les concepts essentiels de Next.js incluant les modes de rendu, le routage, les composants, la récupération de données et l'optimisation.",
+    "shortDescription": "Maîtrisez Next.js 14 avec de la théorie pratique et des exemples concrets",
+    "duration": "45 min",
+    "difficulty": "Intermédiaire",
+    "tags": ["Next.js", "React", "TypeScript", "SSR", "App Router"],
+    "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=400&fit=crop",
+    "totalSteps": 19,
+    "whatYouWillLearn": [
+      "Comprendre les modes de rendu Next.js (SSR, SSG, ISR, CSR)",
+      "Composants Serveur vs Client",
+      "Routage basé sur les fichiers avec App Router",
+      "Récupération de données dans les Composants Serveur",
+      "Création de routes API",
+      "Optimisation d'images et déploiement"
+    ],
+    "prerequisites": [
+      "Connaissances de base de React",
+      "Familiarité avec JavaScript/TypeScript",
+      "Node.js v18+ installé"
+    ]
+  },
+  {
+    "id": "react-fundamentals",
+    "title": "Fondamentaux de React",
+    "description": "Maîtrisez les fondamentaux de React incluant les composants, les hooks, la gestion d'état et les patterns React modernes.",
+    "shortDescription": "Construisez une base solide en React avec des exemples interactifs",
+    "duration": "60 min",
+    "difficulty": "Débutant",
+    "tags": ["React", "JavaScript", "Hooks", "Composants", "État"],
+    "image": "https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&h=400&fit=crop",
+    "totalSteps": 15,
+    "whatYouWillLearn": [
+      "Comprendre les composants React et JSX",
+      "Props et composition de composants",
+      "React Hooks (useState, useEffect, useContext)",
+      "Patterns de gestion d'état",
+      "Gestion d'événements et formulaires",
+      "Rendu conditionnel et listes"
+    ],
+    "prerequisites": [
+      "Connaissances de base en JavaScript",
+      "Compréhension du HTML et CSS",
+      "Node.js installé (pour le développement)"
+    ]
+  },
+  {
+    "id": "typescript-basics",
+    "title": "Bases de TypeScript",
+    "description": "Apprenez TypeScript depuis le début - types, interfaces, classes, génériques et comment utiliser TypeScript avec les frameworks modernes.",
+    "shortDescription": "Maîtrisez TypeScript pour écrire du code plus sûr et maintenable",
+    "duration": "50 min",
+    "difficulty": "Intermédiaire",
+    "tags": ["TypeScript", "JavaScript", "Types", "Programmation", "Développement Web"],
+    "image": "https://images.unsplash.com/photo-1516116216624-53e697fedbea?w=800&h=400&fit=crop",
+    "totalSteps": 18,
+    "whatYouWillLearn": [
+      "Types TypeScript et annotations de type",
+      "Interfaces et définitions de types",
+      "Classes et programmation orientée objet",
+      "Génériques et types avancés",
+      "TypeScript avec React et Next.js",
+      "Sécurité des types et prévention d'erreurs"
+    ],
+    "prerequisites": [
+      "Solides connaissances en JavaScript",
+      "Compréhension des fonctionnalités ES6+",
+      "Concepts de programmation de base"
+    ]
+  }
+]
+
